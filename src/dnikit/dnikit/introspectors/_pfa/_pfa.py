@@ -35,15 +35,15 @@ try:
     from pandas import DataFrame as pdDataFrame
     import pandas as pd
 except ImportError:
-    pdDataFrame = None
-    pd = None
+    pdDataFrame = None  # type: ignore
+    pd = None  # type: ignore
 
 try:
     import matplotlib as mpl
     from matplotlib.axes import Axes as mplAxes
 except ImportError:
-    mpl = None
-    mplAxes = None
+    mpl = None  # type: ignore
+    mplAxes = None  # type: ignore
 
 
 @t.final

@@ -33,8 +33,8 @@ try:
     import matplotlib.pyplot as plt
     from matplotlib.axes import Axes as mplAxes
 except ImportError:
-    plt = None
-    mplAxes = None
+    plt = None   # type: ignore
+    mplAxes = None   # type: ignore
 
 
 @t.final

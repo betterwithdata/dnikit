@@ -52,6 +52,15 @@ from dnikit.processors import (
 )
 
 import dnikit.typing._types as t
+from matplotlib.axes import Axes as mplAxes
+
+
+try:
+    import pandas as pd
+    from pandas import DataFrame as pdDataFrame
+except ImportError:
+    pd = None  # type: ignore
+    pdDataFrame = None  # type: ignore
 
 
 def test_covariance_with_dead_units() -> None:
@@ -335,7 +344,7 @@ class TestUnitSelection:
 
         # After marking unit 0 as highly correlated
         # cor_mat = [[1.0, 0.7, 0.2, 0.3, 0.9], <= correlated
-        #            [0.7, 1.0, 0.1, 0.2, 0.6], <= correlated
+        #            [0.7, 1.0, 0.1, 0.2, 0.6], 0.6
         #            [0.2, 0.1, 1.0, 0.8, 0.3], 0.3 -> 0.8
         #            [0.3, 0.2, 0.8, 1.0, 0.3], 0.3 -> 0.8
         #            [0.9, 0.6, 0.3, 0.3, 1.0]] 0.3 -> 0.3 <== chosen
@@ -343,7 +352,7 @@ class TestUnitSelection:
 
         # After marking unit 4 as highly correlated
         # cor_mat = [[1.0, 0.7, 0.2, 0.3, 0.9], <= correlated
-        #            [0.7, 1.0, 0.1, 0.2, 0.6], <= correlated
+        #            [0.7, 1.0, 0.1, 0.2, 0.6], 0.6 -> 0.2
         #            [0.2, 0.1, 1.0, 0.8, 0.3], 0.8 <== chosen
         #            [0.3, 0.2, 0.8, 1.0, 0.3], 0.8
         #            [0.9, 0.6, 0.3, 0.3, 1.0]] <== correlated
@@ -1065,11 +1074,11 @@ def test_pfa_show_table(kl: bool,
                         exclude_columns: t.Sequence[str],
                         resulting_columns: t.Sequence[str]) -> None:
     results = PFA.show(
-        recipe_result=recipe_results(kl),
+        recipe_result=recipe_results(kl=kl),
         include_columns=include_columns,
         exclude_columns=exclude_columns,
     )
-
+    assert isinstance(results, pd.DataFrame), "Expected pandas DataFrame for TABLE visualization"
     assert len(results.columns) == len(resulting_columns)
     assert set(results.columns) == set(resulting_columns)
 
@@ -1095,7 +1104,7 @@ def test_pfa_show_table_multi_result() -> None:
             recipe_results(kl=False)
         ]
     )
-
+    assert isinstance(results, pd.DataFrame), "Expected pandas DataFrame for TABLE visualization"
     assert len(results) == 4
 
 
@@ -1137,7 +1146,9 @@ def test_pfa_show_chart() -> None:
     recipes = recipe_results()
 
     # Check base chart show method
-    assert PFA.show(recipes, vis_type=PFA.VisType.CHART) is not None
+    result = PFA.show(recipes, vis_type=PFA.VisType.CHART)
+    assert result is not None
+    assert isinstance(result, mplAxes), "Expected matplotlib Axes for CHART visualization"
 
     # Can only pass one recipe to PFA show for show chart
     with pytest.raises(DNIKitException):

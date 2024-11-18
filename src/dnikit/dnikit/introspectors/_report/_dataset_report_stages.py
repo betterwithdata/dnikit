@@ -215,7 +215,7 @@ def _stage_1_runner(producer: Producer, batch_size: int, config: ReportConfig) -
     if run_overall_dim_reduction:
         overall_dim_reduction_intr: t.Callable[[Producer], t.Any] = partial(
             DimensionReduction.introspect,
-            strategies=config.dim_reduction,
+            strategies=config.dim_reduction,  # type: ignore[arg-type]
             batch_size=batch_size,
         )
     else:

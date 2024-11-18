@@ -208,11 +208,11 @@ class Stacker(PipelineStage):
                     f"but {batch_length} are required"
                 )
                 test_lengths = np.array(lengths)
-                assert np.alltrue(test_lengths <= value_length), (
+                assert np.all(test_lengths <= value_length), (
                     f"all values from sequence_lengths "
                     f"must be <= {value_length}: {lengths}"
                 )
-                assert np.alltrue(test_lengths >= 0), (
+                assert np.all(test_lengths >= 0), (
                     f"all values from sequence_lengths "
                     f"must be >= 0: {lengths}"
                 )

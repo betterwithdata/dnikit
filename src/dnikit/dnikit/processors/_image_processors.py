@@ -123,7 +123,10 @@ class ImageGaussianBlurProcessor(Processor):
             for i, original_image_data in enumerate(data):
                 # Blur image
                 result[i, ...] = cv2.GaussianBlur(
-                    original_image_data, sigmaX=sigma, sigmaY=sigma, ksize=k_size
+                    original_image_data,
+                    ksize=k_size,  # type: ignore[arg-type]
+                    sigmaX=sigma,
+                    sigmaY=sigma
                 )
 
             return np.array(result)

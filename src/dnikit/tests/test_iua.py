@@ -18,6 +18,7 @@ from copy import deepcopy
 
 import pytest
 import numpy as np
+import pandas as pd
 
 from dnikit.base import Producer
 from dnikit.samples import StubProducer
@@ -140,14 +141,18 @@ def test_iua_result_statistics(zeros_response_producer: Producer) -> None:
 def test_iua_show_table(iua: IUA) -> None:
     # test all responses for table show
     results = IUA.show(iua)
-    assert results is not None
+    assert isinstance(results, pd.DataFrame), (
+        "Expected pandas DataFrame for TABLE visualization"
+    )
     assert len(results.columns) == 3
     assert set(results.columns) == {'response', 'mean inactive', 'std inactive'}
     assert len(results) == 4
 
     # test single layer argument
     results_less = IUA.show(iua, response_names=['layers_a'])
-    assert results_less is not None
+    assert isinstance(results_less, pd.DataFrame), (
+        "Expected pandas DataFrame for TABLE visualization"
+    )
     assert len(results_less.columns) == 3
     assert set(results_less.columns) == {'response', 'mean inactive', 'std inactive'}
     assert len(results_less) == 1
@@ -155,7 +160,9 @@ def test_iua_show_table(iua: IUA) -> None:
 
     # test multi layer argument
     results_multiple = IUA.show(iua, response_names=['layers_a', 'layers_b'])
-    assert results_multiple is not None
+    assert isinstance(results_multiple, pd.DataFrame), (
+        "Expected pandas DataFrame for TABLE visualization"
+    )
     assert len(results_multiple.columns) == 3
     assert set(results_multiple.columns) == {'response', 'mean inactive', 'std inactive'}
     assert len(results_multiple) == 2
@@ -166,20 +173,19 @@ def test_iua_show_table(iua: IUA) -> None:
 @pytest.mark.skipif(not _matplotlib_available(), reason="Matplotlib not installed")
 def test_iua_show_chart(iua: IUA) -> None:
     # Check base chart show method
-    assert IUA.show(iua, vis_type=IUA.VisType.CHART) is not None
+    result = IUA.show(iua, vis_type=IUA.VisType.CHART)
+    assert result is not None
 
     # single response
     plots = IUA.show(iua, vis_type=IUA.VisType.CHART, response_names=['layers_a'])
-    assert not isinstance(plots, np.ndarray)
-    with pytest.raises(TypeError):
-        # This is a strange way to test, but this will return a single AxisSubplot (not numpy array)
-        assert len(plots) == 1
+    assert plots is not None
+    assert not isinstance(plots, np.ndarray)  # Should be a single Axes object
 
     # multiple responses
     plots = IUA.show(
         iua, vis_type=IUA.VisType.CHART, response_names=['layers_a', 'layers_b'])
     assert isinstance(plots, np.ndarray)
-    assert len(plots) == 2
+    assert plots.size == 2  # Use size instead of len() for numpy arrays
 
     # Bad response name input
     with pytest.raises(ValueError):

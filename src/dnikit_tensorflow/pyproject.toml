@@ -33,7 +33,7 @@ requires = [
 ]
 
 [tool.flit.metadata.requires-extra]
-tf2 = ["tensorflow"]
+tf2 = ["tensorflow==2.15.0"]
 tf1 = [
     # Requirement of tensorflow 1:
     "numpy<1.19",

@@ -15,13 +15,13 @@ For a more thorough discussion of this algorithm and its use, see the
 General Usage
 -------------
 
-Assuming a :func:`pipeline <dnikit.base.pipeline>` has been
+Assuming a :func:`pipeline <deepview.base.pipeline>` has been
 set up to produce responses from a model,
-:class:`PFA <dnikit.introspectors.PFA>` can be run like so:
+:class:`PFA <deepview.introspectors.PFA>` can be run like so:
 
 .. code-block:: python
 
-   from dnikit.introspectors import PFA
+   from deepview.introspectors import PFA
 
    producer = ...  # pipeline setup here
 
@@ -32,16 +32,16 @@ For PFA, like :ref:`IUA <inactive_units>`,
 inputs to introspection should be prepared by selecting which
 **layer responses** to analyze for compression. For instance, for a model
 that uses Conv2D layers, one option could be selecting all the responses
-for those layers by reviewing the DNIKit :class:`Model`'s
-:func:`.response_infos() <dnikit.base.Model.response_infos>` and passing them where the model is
+for those layers by reviewing the DeepView :class:`Model`'s
+:func:`.response_infos() <deepview.base.Model.response_infos>` and passing them where the model is
 used in the pipeline, e.g.:
 
 .. code-block:: python
 
-   dnikit_model = ... # load model here
+   deepview_model = ... # load model here
 
    # Find only conv2d layer responses
-   response_infos = dnikit_model.response_infos()
+   response_infos = deepview_model.response_infos()
    conv_response_names = [
         info.name
         for info in response_infos.values()
@@ -52,12 +52,12 @@ used in the pipeline, e.g.:
         dataset,
         ...
         # Tell the model which responses to look at
-        dnikit_model(conv_response_names),
+        deepview_model(conv_response_names),
         ...
    )
 
 After running PFA, the results cannot be seen yet.
-Instead, the output is a new :class:`PFA <dnikit.introspectors.PFA>`
+Instead, the output is a new :class:`PFA <deepview.introspectors.PFA>`
 object with information attached to build a "**recipe**" using a
 particular :ref:`compression strategy <pfa_config_options>`.
 Here is an example of how to build and show a recipe using the default "KL" strategy:
@@ -83,7 +83,7 @@ or :ref:`example notebooks <pfa_example>`.
 Visualization
 -------------
 
-The :meth:`PFA.show <dnikit.introspectors.PFA.show>` method will by default print a table
+The :meth:`PFA.show <deepview.introspectors.PFA.show>` method will by default print a table
 (in a Jupyter notebook) of the suggested new layer sizes:
 
 .. code-block:: python
@@ -114,7 +114,7 @@ it's possible to pass a list of recipes into :code:`show`:
 
     PFA.show([recipe_KL, recipe_energy_80])
 
-For more options, see the :class:`API <dnikit.introspectors.PFA.show>`.
+For more options, see the :class:`API <deepview.introspectors.PFA.show>`.
 
 .. _pfa_config_options:
 
@@ -122,13 +122,13 @@ Config options
 --------------
 
 The main configuration of PFA analysis is not done on the :func:`introspect` method
-directly, but in PFA's :func:`get_recipe <dnikit.introspectors.PFA.get_recipe>` method,
-which is passed the return object of :func:`introspect <dnikit.introspectors.PFA.introspect>`. :func:`get_recipe <dnikit.introspectors.PFA.get_recipe>` has
+directly, but in PFA's :func:`get_recipe <deepview.introspectors.PFA.get_recipe>` method,
+which is passed the return object of :func:`introspect <deepview.introspectors.PFA.introspect>`. :func:`get_recipe <deepview.introspectors.PFA.get_recipe>` has
 a number of configuration options, named "strategies," to choose from.
 
 PFA  Strategies
 ^^^^^^^^^^^^^^^
-PFA has different :class:`strategies <dnikit.introspectors.PFA.Strategy>` that can be chosen in order to satisfy a specific target while identifying how many units are least correlated.
+PFA has different :class:`strategies <deepview.introspectors.PFA.Strategy>` that can be chosen in order to satisfy a specific target while identifying how many units are least correlated.
 The strategies available are **PFA Size**, **PFA Energy**, and **PFA KL**.
 
 PFA Energy
@@ -369,34 +369,34 @@ information about the correlation present in their responses.
 allows) and extract the responses of the layers that should be analyzed. It is the user who chooses
 which layer to analyze, the analysis can target a specific layer, or include all convolutional and
 fully connected layers. This step can be performed using any external
-tool or with the DNIKit inference tools.
+tool or with the DeepView inference tools.
 
 .. image:: ../../notebooks/assets/Inference.png
    :alt: Illustration of intermediate network layers, which could consist of a
          number of channels, height, and width.
    :align: center
 
-.. Note:: DNIKit supports models from several frameworks, to see the complete list of supported framework visit the
-  :ref:`Installation` page. When using a non-supported framework, it's still possible to use PFA (as well as all other DNIKit
-  introspectors) by running inference (step 2) and collecting the responses without the help of DNIKit. This then requires
-  building a custom :class:`DNIKit Producer <dnikit.base.Producer>` to passes the responses to the PFA
+.. Note:: DeepView supports models from several frameworks, to see the complete list of supported framework visit the
+  :ref:`Installation` page. When using a non-supported framework, it's still possible to use PFA (as well as all other DeepView
+  introspectors) by running inference (step 2) and collecting the responses without the help of DeepView. This then requires
+  building a custom :class:`DeepView Producer <deepview.base.Producer>` to passes the responses to the PFA
   introspector or any other introspector (see :ref:`create a custom <creating_custom_producer>`).
 
 ..
-    #LZ:  it would be great to have an example about this, also the DNIKit producer is currently berried inside the Data Management but it feels as it should be a first citizen of the DNIKit world
+    #LZ:  it would be great to have an example about this, also the DeepView producer is currently berried inside the Data Management but it feels as it should be a first citizen of the DeepView world
 
 ..
     **3**. Perform a dimensionality reduction of the responses. This step is optional, the only constraint is that the
     as long as the response matrix fed to PFA must be 2D and the second dimension must be equal to the number of filters
     (or neurons in a dense layer). In practice, pooling is often useful since the
     flattened responses can be very big. A common reduction algorithm is Max or Avg pooling but other options can be used
-    (e.g., concatenation of Max and Avg or some spatial/temporal preserving pooling). Like for the previous step, DNIKit provides tools to
+    (e.g., concatenation of Max and Avg or some spatial/temporal preserving pooling). Like for the previous step, DeepView provides tools to
     perform this part of the pipeline (the most common pooling operations are already implemented, other can be implemented by extending a
     :ref:`Processor <Processors API>`, however, one can choose to pre-process the responses using external tools).
 
 **3**. Perform a response reduction. This step is only needed for convolutional layers. Once the response from a
 convolutional layer is obtained 1 value per each filter is extracted. A common reduction algorithm is
-Max or Avg pooling. Like for the previous step, DNIKit provides tools to perform this part of the pipeline
+Max or Avg pooling. Like for the previous step, DeepView provides tools to perform this part of the pipeline
 (the most common pooling operations are already implemented, other can be implemented by extending a
 :ref:`Processor <Processors API>`, however, one can choose to process the responses using external tools).
 
@@ -448,7 +448,7 @@ In order to identify which units are identified as least redundant see the secti
 **6**. Use the information of the recipe. This steps depends on the target application.
 
 .. Note:: The user is responsible for steps 1 and 6,
-   while all the other steps can be done within DNIKit.
+   while all the other steps can be done within DeepView.
 
 PFA for Transfer Learning
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -527,10 +527,10 @@ Example
 
 Relevant API
 ------------
-- :class:`PFA Introspector <dnikit.introspectors.PFA>`
-- :class:`PFA Compression Strategies <dnikit.introspectors.PFA.Strategy>`
-- :class:`PFA Unit Selection Strategies <dnikit.introspectors.PFA.UnitSelectionStrategy>`
-- :func:`PFA Recipe <dnikit.introspectors.PFA.get_recipe>`
+- :class:`PFA Introspector <deepview.introspectors.PFA>`
+- :class:`PFA Compression Strategies <deepview.introspectors.PFA.Strategy>`
+- :class:`PFA Unit Selection Strategies <deepview.introspectors.PFA.UnitSelectionStrategy>`
+- :func:`PFA Recipe <deepview.introspectors.PFA.get_recipe>`
 
 .. rubric:: References
 

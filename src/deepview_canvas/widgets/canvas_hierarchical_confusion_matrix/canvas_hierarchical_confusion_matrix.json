@@ -1,0 +1,5 @@
+{
+  "load_extensions": {
+    "canvas_hierarchical_confusion_matrix/extension": true
+  }
+}

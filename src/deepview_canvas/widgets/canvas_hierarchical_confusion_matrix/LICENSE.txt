@@ -1,0 +1,39 @@
+Copyright (C) 2023 betterwithdata Inc. All Rights Reserved.
+
+IMPORTANT:  This betterwithdata software is supplied to you by betterwithdata
+Inc. ("betterwithdata") in consideration of your agreement to the following
+terms, and your use, installation, modification or redistribution of
+this betterwithdata software constitutes acceptance of these terms.  If you do
+not agree with these terms, please do not use, install, modify or
+redistribute this betterwithdata software.
+
+In consideration of your agreement to abide by the following terms, and
+subject to these terms, betterwithdata grants you a personal, non-exclusive
+license, under betterwithdata's copyrights in this original betterwithdata software (the
+"betterwithdata Software"), to use, reproduce, modify and redistribute the betterwithdata
+Software, with or without modifications, in source and/or binary forms;
+provided that if you redistribute the betterwithdata Software in its entirety and
+without modifications, you must retain this notice and the following
+text and disclaimers in all such redistributions of the betterwithdata Software.
+Neither the name, trademarks, service marks or logos of betterwithdata Inc. may
+be used to endorse or promote products derived from the betterwithdata Software
+without specific prior written permission from betterwithdata.  Except as
+expressly stated in this notice, no other rights or licenses, express or
+implied, are granted by betterwithdata herein, including but not limited to any
+patent rights that may be infringed by your derivative works or by other
+works in which the betterwithdata Software may be incorporated.
+
+The betterwithdata Software is provided by betterwithdata on an "AS IS" basis.  betterwithdata
+MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE, REGARDING THE betterwithdata SOFTWARE OR ITS USE AND
+OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
+
+IN NO EVENT SHALL betterwithdata BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
+OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
+MODIFICATION AND/OR DISTRIBUTION OF THE betterwithdata SOFTWARE, HOWEVER CAUSED
+AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
+STRICT LIABILITY OR OTHERWISE, EVEN IF betterwithdata HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.

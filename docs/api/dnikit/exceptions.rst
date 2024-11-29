@@ -2,9 +2,9 @@
 Exceptions
 ==========
 
-This module contains all exceptions used throughout DNIKit.
+This module contains all exceptions used throughout DeepView.
 
-.. automodule:: dnikit.exceptions
+.. automodule:: deepview.exceptions
     :members:
     :undoc-members:
     :show-inheritance:

@@ -7,15 +7,15 @@ assignees: ''
 ---
 # Bug Report
 If this is something you can debug and fix? Send a pull request. Bug fixes, documentation fixes, and other contributions are welcome.
-Please use the other issue template for a [**Feature Request**](https://github.com/apple/dnikit/issues/new?assignees=&labels=&template=feature_request_template.md&title=).
+Please use the other issue template for a [**Feature Request**](https://github.com/apple/deepview/issues/new?assignees=&labels=&template=feature_request_template.md&title=).
 **One sentence summary of PR:**
 
 ## Checklist
 ( Replace '[ ]' with '[x]' if completed. )
 
-    - [ ] I've checked [the issues list](https://github.com/apple/dnikit/issues) to make sure a bug for this is not already filed.
-    - [ ] I've updated to the latest version of DNIKit.
-    - [ ] I've searched the [documentation](https://apple.github.io/dnikit/index.html), if appropriate, and found no answer.
+    - [ ] I've checked [the issues list](https://github.com/apple/deepview/issues) to make sure a bug for this is not already filed.
+    - [ ] I've updated to the latest version of DeepView.
+    - [ ] I've searched the [documentation](https://apple.github.io/deepview/index.html), if appropriate, and found no answer.
 
 ## Description
 
@@ -31,7 +31,7 @@ This would be the place for related issues, suggestions, links for context, etc.
 ### Environment Setup
 - **Python Version**:
 - **MacOS or Linux**:
-- For general users - **Version of DNIKit**:
-- For developers - **Branch of DNIKit / commit ID (if not latest commit)**:
-- **DNIKit Virtualenv? (Yes/No)**:
+- For general users - **Version of DeepView**:
+- For developers - **Branch of DeepView / commit ID (if not latest commit)**:
+- **DeepView Virtualenv? (Yes/No)**:
 - **Additional dependencies (attach your pip freeze)**:

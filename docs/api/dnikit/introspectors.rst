@@ -10,26 +10,26 @@ Data Introspectors
 -------------------
 Familiarity
 ~~~~~~~~~~~
-.. autoclass:: dnikit.introspectors.Familiarity
+.. autoclass:: deepview.introspectors.Familiarity
     :members:
 
-.. autoclass:: dnikit.introspectors.FamiliarityStrategyType
+.. autoclass:: deepview.introspectors.FamiliarityStrategyType
     :members:
     :special-members: __call__
 
-.. autoclass:: dnikit.introspectors.FamiliarityResult
+.. autoclass:: deepview.introspectors.FamiliarityResult
     :members:
 
-.. autoclass:: dnikit.introspectors.GMMCovarianceType
+.. autoclass:: deepview.introspectors.GMMCovarianceType
     :members:
 
-.. autoclass:: dnikit.introspectors.FamiliarityDistribution
+.. autoclass:: deepview.introspectors.FamiliarityDistribution
     :members: compute_familiarity_score
 
 Dimensionality Reduction
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. autoclass:: dnikit.introspectors.DimensionReduction
+.. autoclass:: deepview.introspectors.DimensionReduction
     :members:
     :exclude-members: check_batch_size, default_batch_size, fit_complete, fit_incremental,
         is_one_shot, transform, transform_one_shot
@@ -38,27 +38,27 @@ Dimensionality Reduction
 
 alias of Union[DimensionReductionStrategyType, Mapping[str, DimensionReductionStrategyType]]
 
-.. autoclass:: dnikit.introspectors.DimensionReductionStrategyType
+.. autoclass:: deepview.introspectors.DimensionReductionStrategyType
     :members:
 
 Duplicates
 ~~~~~~~~~~
 
-.. autoclass:: dnikit.introspectors.Duplicates
+.. autoclass:: deepview.introspectors.Duplicates
     :members: ThresholdStrategy, DuplicateSetCandidate, introspect, results, count
     :undoc-members:
 
-.. autoclass:: dnikit.introspectors.DuplicatesThresholdStrategyType
+.. autoclass:: deepview.introspectors.DuplicatesThresholdStrategyType
     :special-members: __call__
 
 
 Dataset Report
 ~~~~~~~~~~~~~~
 
-.. autoclass:: dnikit.introspectors.DatasetReport
+.. autoclass:: deepview.introspectors.DatasetReport
     :members:
 
-.. autoclass:: dnikit.introspectors.ReportConfig
+.. autoclass:: deepview.introspectors.ReportConfig
     :members:
 
 
@@ -67,29 +67,29 @@ Model Introspectors
 
 Principal Filter Analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: dnikit.introspectors.PFA
+.. autoclass:: deepview.introspectors.PFA
     :members:
 
-.. autoclass:: dnikit.introspectors.PFAKLDiagnostics
+.. autoclass:: deepview.introspectors.PFAKLDiagnostics
     :members:
 
-.. autoclass:: dnikit.introspectors.PFAEnergyDiagnostics
+.. autoclass:: deepview.introspectors.PFAEnergyDiagnostics
     :members:
 
-.. autoclass:: dnikit.introspectors.PFARecipe
+.. autoclass:: deepview.introspectors.PFARecipe
     :members:
 
-.. autoclass:: dnikit.introspectors.PFAUnitSelectionStrategyType
+.. autoclass:: deepview.introspectors.PFAUnitSelectionStrategyType
     :special-members: __call__
 
-.. autoclass:: dnikit.introspectors.PFAStrategyType
+.. autoclass:: deepview.introspectors.PFAStrategyType
     :special-members: __call__
 
-.. autoclass:: dnikit.introspectors.PFACovariancesResult
+.. autoclass:: deepview.introspectors.PFACovariancesResult
     :members:
 
 Inactive Unit Analysis
 ~~~~~~~~~~~~~~~~~~~~~~
 
-.. autoclass:: dnikit.introspectors.IUA
+.. autoclass:: deepview.introspectors.IUA
     :members:

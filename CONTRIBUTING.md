@@ -1,7 +1,7 @@
 
 # Contribution Guide
 
-Thank you for your interest in contributing to DNIKit! This project was released to share our work and support our publications in this area, but there are limited plans for future development of the repository. While we welcome new pull requests and issues and will do our best to support them, please note that our response may be limited. Forks and out-of-tree improvements are strongly encouraged.
+Thank you for your interest in contributing to DeepView! This project was released to share our work and support our publications in this area, but there are limited plans for future development of the repository. While we welcome new pull requests and issues and will do our best to support them, please note that our response may be limited. Forks and out-of-tree improvements are strongly encouraged.
 
 ## Submitting a Pull Request
 
@@ -18,4 +18,4 @@ We ask that all community members read and observe our [Code of Conduct](CODE_OF
 
 ## Development Guide
 
-Please see the [Contributor's Guide](https://apple.github.io/dnikit/dev/contributing.html) in the documentation for information about how to set up a development environment for DNIKit.
+Please see the [Contributor's Guide](https://apple.github.io/deepview/dev/contributing.html) in the documentation for information about how to set up a development environment for DeepView.

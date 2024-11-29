@@ -1,7 +1,7 @@
-components := dnikit dnikit_tensorflow dnikit_torch
+components := deepview deepview_tensorflow deepview_torch
 
-clean_dirs := src/dnikit*/dist junit*.xml coverage .coverage* .env* docs/_build
-clean_dirs += */.pytest_cache src/dnikit*/.pytest_cache .pytest_cache .mypy_cache
+clean_dirs := src/deepview*/dist junit*.xml coverage .coverage* .env* docs/_build
+clean_dirs += */.pytest_cache src/deepview*/.pytest_cache .pytest_cache .mypy_cache
 
 export PIP_INDEX_URL := https://pypi.org/simple
 
@@ -12,15 +12,15 @@ all: install
 
 install: cmd = install -s --deps=develop --extras=notebook,image,dimreduction,dataset-report,tf2
 install: $(components)
-	@echo "Done installing DNIKit."
+	@echo "Done installing DeepView."
 
 install-tf1-gpu: cmd = install -s --deps=develop --extras=notebook,image,dimreduction,dataset-report,tf1-gpu
 install-tf1-gpu: $(components)
-	@echo "Done installing DNIKit with TF1 GPU."
+	@echo "Done installing DeepView with TF1 GPU."
 
 install-tf1: cmd = install -s --deps=develop --extras=notebook,image,dimreduction,dataset-report,tf1
 install-tf1: $(components)
-	@echo "Done installing DNIKit with TF 1."
+	@echo "Done installing DeepView with TF 1."
 
 $(components):
 	@pip install -U flit$(FLIT_VER) flit_core$(FLIT_VER)

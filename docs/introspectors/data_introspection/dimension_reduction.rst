@@ -3,18 +3,18 @@
 Dimension Reduction
 ===================
 
-DNIKit provides a :class:`DimensionReduction <dnikit.introspectors.DimensionReduction>`
+DeepView provides a :class:`DimensionReduction <deepview.introspectors.DimensionReduction>`
 introspector with a variety of strategies (algorithms).
 `DimensionReduction` has two primary uses:
 
-- reduce high-dimensional data to something lower for consumption by a different :class:`Introspector <dnikit.base.Introspector>`
+- reduce high-dimensional data to something lower for consumption by a different :class:`Introspector <deepview.base.Introspector>`
 - reduce data to 2D or 3D for visualization (e.g. :ref:`Dataset Report <dataset_report>`).
 
 Often, model responses are very large in the number of dimensions. However,
 some algorithms work better on lower dimensional data.
-For example :class:`Familiarity <dnikit.introspectors.Familiarity>` and
+For example :class:`Familiarity <deepview.introspectors.Familiarity>` and
 even the
-:class:`DimensionReduction Strategies <dnikit.introspectors.DimensionReduction.Strategy>`
+:class:`DimensionReduction Strategies <deepview.introspectors.DimensionReduction.Strategy>`
 other than `PCA` work better on e.g. 40 dimensional data.
 Some of the algorithms state this is useful for reducing the noise in
 very high dimensional data.
@@ -30,7 +30,7 @@ The notebook :ref:`below <dimensionreduction_example>` also shows examples of do
 General Usage
 -------------
 
-For getting started with DNIKit code, please see the :ref:`how-to pages <connect_your_model>`.
+For getting started with DeepView code, please see the :ref:`how-to pages <connect_your_model>`.
 
 .. code-block:: python
 
@@ -53,20 +53,20 @@ See the :ref:`example notebook <dimensionreduction_example>` below for more deta
 Config Options
 --------------
 
-DNIKit comes with four :class:`Strategies <dnikit.introspectors.DimensionReduction.Strategy>`
+DeepView comes with four :class:`Strategies <deepview.introspectors.DimensionReduction.Strategy>`
 for performing dimension reduction, each with their own advantages and disadvantages:
 
-- :class:`PCA <dnikit.introspectors.DimensionReduction.Strategy.PCA>`
+- :class:`PCA <deepview.introspectors.DimensionReduction.Strategy.PCA>`
 	- very fast and good for reducing e.g. 1024 -> 40 dimensions
 	- memory efficient
 	- not suitable for 2D projection
-- :class:`UMAP <dnikit.introspectors.DimensionReduction.Strategy.UMAP>`
+- :class:`UMAP <deepview.introspectors.DimensionReduction.Strategy.UMAP>`
 	- excellent 2D projections
 	- preserves local but not global structure
-- :class:`PaCMAP <dnikit.introspectors.DimensionReduction.Strategy.PaCMAP>`
+- :class:`PaCMAP <deepview.introspectors.DimensionReduction.Strategy.PaCMAP>`
 	- excellent 2D projections
 	- preserves local and global structure
-- :class:`TSNE (t-SNE) <dnikit.introspectors.DimensionReduction.Strategy.TSNE>`
+- :class:`TSNE (t-SNE) <deepview.introspectors.DimensionReduction.Strategy.TSNE>`
 	- largely replaced by newer strategies
 
 For a more in-depth comparison, please see
@@ -75,7 +75,7 @@ For a more in-depth comparison, please see
 Relevant API
 ------------
 
-- :class:`DimensionReduction <dnikit.introspectors.DimensionReduction>`: introspector for Dimension Reduction
+- :class:`DimensionReduction <deepview.introspectors.DimensionReduction>`: introspector for Dimension Reduction
 
 
 .. _dimensionreduction_example:

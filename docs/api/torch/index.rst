@@ -1,13 +1,13 @@
 .. _torch_api:
 
 =====================
-``dnikit_torch``
+``deepview_torch``
 =====================
 
 .. contents:: Contents
     :local:
 
-.. automodule:: dnikit_torch
+.. automodule:: deepview_torch
     :members:
     :undoc-members:
     :show-inheritance:

@@ -2,11 +2,11 @@
 Processors API
 ==============
 
-.. autoclass:: dnikit.processors.Processor
+.. autoclass:: deepview.processors.Processor
     :members:
     :show-inheritance:
 
-.. automodule:: dnikit.processors
+.. automodule:: deepview.processors
     :members:
     :exclude-members: Processor
     :undoc-members:

@@ -4,13 +4,13 @@
 Batch Processors
 ================
 
-DNIKit provides a large number of various
-:class:`Processors <dnikit.processors.Processor>` for batches. For instance,
+DeepView provides a large number of various
+:class:`Processors <deepview.processors.Processor>` for batches. For instance,
 a processor might resize the images in a batch, perform data augmentation,
 remove batch fields, attach metadata, rename labels, etc. These processors
-are chained together in :func:`pipelines <dnikit.base.pipeline>`,
-acting as :class:`PipelineStages <dnikit.base.PipelineStage>`. Note that
-:class:`Processors <dnikit.processors.Processor>`
+are chained together in :func:`pipelines <deepview.base.pipeline>`,
+acting as :class:`PipelineStages <deepview.base.PipelineStage>`. Note that
+:class:`Processors <deepview.processors.Processor>`
 always come after a data :ref:`Producer <data_producers>`,
 which is what generates batches to begin with.
 
@@ -20,110 +20,110 @@ and links to their API for more information.
 Batch filtering and concatenation
 ---------------------------------
 
-:class:`Composer <dnikit.processors.Composer>` for filtering
+:class:`Composer <deepview.processors.Composer>` for filtering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.Composer
+.. autoclass:: deepview.processors.Composer
     :noindex:
 
-:class:`Concatenator <dnikit.processors.Concatenator>` for merging fields
+:class:`Concatenator <deepview.processors.Concatenator>` for merging fields
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.Concatenator
+.. autoclass:: deepview.processors.Concatenator
     :noindex:
 
 Renaming fields and metadata
 ----------------------------
 
-:class:`FieldRenamer <dnikit.processors.FieldRenamer>`
+:class:`FieldRenamer <deepview.processors.FieldRenamer>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.FieldRenamer
+.. autoclass:: deepview.processors.FieldRenamer
     :noindex:
 
-:class:`MetadataRenamer <dnikit.processors.MetadataRenamer>`
+:class:`MetadataRenamer <deepview.processors.MetadataRenamer>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.MetadataRenamer
+.. autoclass:: deepview.processors.MetadataRenamer
     :noindex:
 
 Removing fields and metadata
 ----------------------------
 
-:class:`FieldRemover <dnikit.processors.FieldRemover>`
+:class:`FieldRemover <deepview.processors.FieldRemover>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.FieldRemover
+.. autoclass:: deepview.processors.FieldRemover
     :noindex:
 
-:class:`MetadataRemover <dnikit.processors.MetadataRemover>`
+:class:`MetadataRemover <deepview.processors.MetadataRemover>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.MetadataRemover
+.. autoclass:: deepview.processors.MetadataRemover
     :noindex:
 
-:class:`SnapshotRemover <dnikit.processors.SnapshotRemover>`
+:class:`SnapshotRemover <deepview.processors.SnapshotRemover>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.SnapshotRemover
+.. autoclass:: deepview.processors.SnapshotRemover
     :noindex:
 
 General data transforms
 -----------------------
 
-:class:`MeanStdNormalizer <dnikit.processors.MeanStdNormalizer>`
+:class:`MeanStdNormalizer <deepview.processors.MeanStdNormalizer>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.MeanStdNormalizer
+.. autoclass:: deepview.processors.MeanStdNormalizer
     :noindex:
 
-:class:`Pooler <dnikit.processors.Pooler>` (Max Pooling)
+:class:`Pooler <deepview.processors.Pooler>` (Max Pooling)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.Pooler
+.. autoclass:: deepview.processors.Pooler
     :noindex:
 
-:class:`Transposer <dnikit.processors.Transposer>`
+:class:`Transposer <deepview.processors.Transposer>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.Transposer
+.. autoclass:: deepview.processors.Transposer
     :noindex:
 
 Image operations
 ----------------
 
-:class:`ImageResizer <dnikit.processors.ImageResizer>` to resize images
+:class:`ImageResizer <deepview.processors.ImageResizer>` to resize images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.ImageResizer
+.. autoclass:: deepview.processors.ImageResizer
     :noindex:
 
-:class:`ImageRotationProcessor <dnikit.processors.ImageRotationProcessor>` to rotate images
+:class:`ImageRotationProcessor <deepview.processors.ImageRotationProcessor>` to rotate images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.ImageRotationProcessor
+.. autoclass:: deepview.processors.ImageRotationProcessor
     :noindex:
 
 Augmentations
 ^^^^^^^^^^^^^
 
-:class:`ImageGaussianBlurProcessor <dnikit.processors.ImageGaussianBlurProcessor>`
+:class:`ImageGaussianBlurProcessor <deepview.processors.ImageGaussianBlurProcessor>`
 **********************************************************************************
 
-.. autoclass:: dnikit.processors.ImageGaussianBlurProcessor
+.. autoclass:: deepview.processors.ImageGaussianBlurProcessor
     :noindex:
 
-:class:`ImageGammaContrastProcessor <dnikit.processors.ImageGammaContrastProcessor>`
+:class:`ImageGammaContrastProcessor <deepview.processors.ImageGammaContrastProcessor>`
 ************************************************************************************
 
-.. autoclass:: dnikit.processors.ImageGammaContrastProcessor
+.. autoclass:: deepview.processors.ImageGammaContrastProcessor
     :noindex:
 
 Utility processors
 ------------------
 
-:class:`Cacher <dnikit.processors.Cacher>` to cache responses from pipelines
+:class:`Cacher <deepview.processors.Cacher>` to cache responses from pipelines
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.processors.Cacher
+.. autoclass:: deepview.processors.Cacher
     :noindex:

@@ -8,21 +8,21 @@ Introspect
 as data passes through. Introspecting networks and data can help
 improve an ML pipeline's efficiency, robustness, and fairness.
 
-DNIKit :class:`Introspectors <dnikit.base.Introspector>` are the core algorithms of DNIKit.
+DeepView :class:`Introspectors <deepview.base.Introspector>` are the core algorithms of DeepView.
 You can see all available introspectors on the following pages:
 
 - :ref:`Data Introspectors <data_introspection>`
 - :ref:`Network Introspectors <model_introspection>`
 
-As noted previously, DNIKit uses evaluation, and so
-each :class:`Introspector <dnikit.base.Introspector>` has an
-:attr:`.introspect() <dnikit.base.Introspector.introspect>` method which will trigger the
-:class:`Producers <dnikit.base.Producer>` to generate data and the
-:func:`pipelines <dnikit.base.pipeline>` to consume and process it. This is demonstrated in
+As noted previously, DeepView uses evaluation, and so
+each :class:`Introspector <deepview.base.Introspector>` has an
+:attr:`.introspect() <deepview.base.Introspector.introspect>` method which will trigger the
+:class:`Producers <deepview.base.Producer>` to generate data and the
+:func:`pipelines <deepview.base.pipeline>` to consume and process it. This is demonstrated in
 the diagram below.
 
 .. image:: ../img/arch_overview.gif
-    :alt: An animated diagram illustrating the DNIKit pipeline. A single batch at a time
+    :alt: An animated diagram illustrating the DeepView pipeline. A single batch at a time
           is fed through the entire pipeline, from Producer to Introspector.
 
 
@@ -30,7 +30,7 @@ Exploring Results
 -----------------
 
 To explore the result of an introspection,
-DNIKit's **network** introspectors (PFA, IUA) have a :code:`.show()` method built-in, that
+DeepView's **network** introspectors (PFA, IUA) have a :code:`.show()` method built-in, that
 can be run in a Jupyter notebook to view the results live.
 For these show methods, the result of the :code:`.introspect()` call should be passed in
 as the first argument.
@@ -51,12 +51,12 @@ For instance, an example for :ref:`IUA <inactive_units>`:
 
 |
 
-The results of DNIKit **data** introspectors can be visualized and explored in different manners.
+The results of DeepView **data** introspectors can be visualized and explored in different manners.
 If the data introspectors are run as part of the
 :ref:`Dataset Report <dataset_report>`, the introspection results may be directly fed to and
 explored interactively with the `Symphony UI <https://github.com/apple/ml-symphony>`_.
 If the introspector is run outside of the :ref:`Dataset Report <dataset_report>`, the
-:ref:`DNIKit notebook examples <example_notebooks>` show one of many possible ways each result may
+:ref:`DeepView notebook examples <example_notebooks>` show one of many possible ways each result may
 be visualized.
 
 Best Practices
@@ -64,7 +64,7 @@ Best Practices
 
 Preparing Inputs for Introspectors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-There are various ways in which DNIKit introspection can be tailored for different use cases.
+There are various ways in which DeepView introspection can be tailored for different use cases.
 Here are some common things for users to think about:
 
 - Which intermediate layer(s) to extract model responses from
@@ -80,15 +80,15 @@ To use an introspector, typically certain layer(s) of the network model are used
 rather that using the final outputs (or *predictions*). These layer names can be
 provided as input, and thus requires finding the correct layer names. It's possible to
 inspect a dictionary of responses with the
-:meth:`response_infos <dnikit.base.Model.response_infos>` method:
+:meth:`response_infos <deepview.base.Model.response_infos>` method:
 
 .. code-block:: python
 
    model = ... # load model here, e.g. with load_tf_model_from_path
    response_infos = model.response_infos
 
-DNIKit also provides a utility function for finding
-input layers from a :class:`Model <dnikit.base.Model>`
+DeepView also provides a utility function for finding
+input layers from a :class:`Model <deepview.base.Model>`
 
 .. code-block:: python
 
@@ -101,19 +101,19 @@ input layers from a :class:`Model <dnikit.base.Model>`
 Caching responses from pipelines
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When running DNIKit in a Jupyter notebook, a good rule of thumb is to
-:class:`cache <dnikit.processors.Cacher>`
+When running DeepView in a Jupyter notebook, a good rule of thumb is to
+:class:`cache <deepview.processors.Cacher>`
 (temporarily store on disk) responses at a point in the :ref:`pipeline <pipeline>` where
 it doesn't make sense to re-run every time the pipeline is processed (e.g. via introspect).
-This can be done by adding a :class:`Cacher <dnikit.processors.Cacher>` as a
-:class:`PipelineStage <dnikit.base.PipelineStage>`. For instance:
+This can be done by adding a :class:`Cacher <deepview.processors.Cacher>` as a
+:class:`PipelineStage <deepview.base.PipelineStage>`. For instance:
 
 .. code-block:: python
 
-    from dnikit_tensorflow import TFDatasetExamples, TFModelExamples
-    from dnikit.base import pipeline
-    from dnikit.introspectors import Familiarity
-    from dnikit.processors import ImageResizer, Cacher
+    from deepview_tensorflow import TFDatasetExamples, TFModelExamples
+    from deepview.base import pipeline
+    from deepview.introspectors import Familiarity
+    from deepview.processors import ImageResizer, Cacher
 
     # Load data, model, and set up batch pipeline
     cifar10 = TFDatasetExamples.CIFAR10()
@@ -130,8 +130,8 @@ This can be done by adding a :class:`Cacher <dnikit.processors.Cacher>` as a
 In this code, the CIFAR10 dataset will only be pulled through the MobileNet
 model **a single time,** regardless of how many times :code:`response_producer` is used later.
 The ``response_producer`` can then be fed to various :ref:`introspectors <how_to_introspect>`
-or perform post-processing by creating new :func:`pipelines <dnikit.base.pipeline>`
-using :code:`response_producer` as the :class:`producer <dnikit.base.Producer>`. It is on the user
+or perform post-processing by creating new :func:`pipelines <deepview.base.pipeline>`
+using :code:`response_producer` as the :class:`producer <deepview.base.Producer>`. It is on the user
 to decide if caching will use significant space on their machine, and if it is worth the speed-up.
 For instance, caching a single model response per data sample (caching after model inference)
 will take up less space than caching large video data samples before model inference.

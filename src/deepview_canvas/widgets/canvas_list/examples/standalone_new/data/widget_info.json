@@ -1,0 +1,1 @@
+{"experiment": "Speech", "spec": {"filesPath": "files/", "dataType": 3, "instancesPerPage": 10, "showUnfilteredData": true, "idColumn": "id"}, "pages": {"List": [{"name": "CanvasList", "file": "CanvasList.json", "height": "M", "width": "XXL", "page": "List"}]}, "exportID": "c957cf3c-4b6e-11ef-b070-00a5548b34c2"}

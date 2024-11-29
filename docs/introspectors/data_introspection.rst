@@ -6,7 +6,7 @@ Data Introspection
 
 Data introspectors observe intermediate model responses,
 and process data in batches when calling
-:attr:`.introspect() <dnikit.base.Introspector.introspect>`.
+:attr:`.introspect() <deepview.base.Introspector.introspect>`.
 
 :ref:`Dataset Report <dataset_report>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,13 +1,13 @@
 .. _tensorflow_api:
 
 =====================
-``dnikit_tensorflow``
+``deepview_tensorflow``
 =====================
 
 .. contents:: Contents
     :local:
 
-.. automodule:: dnikit_tensorflow
+.. automodule:: deepview_tensorflow
     :members:
     :exclude-members: str_to_label_idx, load_dataset, split_dataset
     :special-members: __call__

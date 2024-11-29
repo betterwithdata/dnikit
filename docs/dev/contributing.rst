@@ -4,7 +4,7 @@
 Contributor's Guide
 ===================
 
-Here are some useful notes about DNIKit development.
+Here are some useful notes about DeepView development.
 
 Development Installation
 ------------------------
@@ -12,21 +12,21 @@ Development Installation
 Development Branch
 ##################
 
-The current development branch is `develop <https://github.com/apple/dnikit/tree/develop>`_. *Direct pushes to
+The current development branch is `develop <https://github.com/apple/deepview/tree/develop>`_. *Direct pushes to
 this branch are not allowed.* For all contributions, branch from and send pull requests to this branch.
 
 
 Clone the Code
 ##############
 
-Clone the code from `the main repository <https://github.apple/dnikit>`_::
+Clone the code from `the main repository <https://github.apple/deepview>`_::
 
-    git clone git@github.com:apple/dnikit.git
+    git clone git@github.com:apple/deepview.git
 
 
 .. _standardinstallation:
 
-Install DNIKit from Local Code
+Install DeepView from Local Code
 ##############################
 
 1. Install python version 3.9 (recommended). To run TensorFlow1, install Python 3.7.
@@ -49,11 +49,11 @@ is installed.
     pip install --upgrade pip wheel
 
 3. Checkout the branch to install from (like our development branch, ``develop``).
-4. Install DNIKit and other requirements for development::
+4. Install DeepView and other requirements for development::
 
     make install
 
-This will install ``dnikit[notebook,test,doc,tensorflow,dataset-report,image,dimreduction,duplicates]``.
+This will install ``deepview[notebook,test,doc,tensorflow,dataset-report,image,dimreduction,duplicates]``.
 
 To install TF1-compatible code, try::
 
@@ -63,10 +63,10 @@ Or for TF1 GPU::
 
     make install-tf1-gpu
 
-5. Start using DNIKit! For example::
+5. Start using DeepView! For example::
 
-    # import DNIKit Components like this:
-    from dnikit.introspectors import PFA
+    # import DeepView Components like this:
+    from deepview.introspectors import PFA
 
 To uninstall::
 
@@ -74,7 +74,7 @@ To uninstall::
 
 (Optional) Install Git Large File Storage (LFS)
 ###############################################
-To track large files and binaries, DNIKit uses `Git LFS <https://git-lfs.github.com>`_,
+To track large files and binaries, DeepView uses `Git LFS <https://git-lfs.github.com>`_,
 which replaces the actual file and
 history with a text pointer, and stores the file contents on GitHub.
 
@@ -83,8 +83,8 @@ then set up with::
 
     git lfs install
 
-Currently, tracked via `.gitattributes <https://github.com/apple/dnikit/blob/main/.gitattributes>`_,
-the DNIKit LFS files are:
+Currently, tracked via `.gitattributes <https://github.com/apple/deepview/blob/main/.gitattributes>`_,
+the DeepView LFS files are:
 
 - .png
 - .jpg
@@ -111,15 +111,15 @@ Writing Code
 Updating & Building the Docs
 ----------------------------
 
-The DNIKit docs are built with `Sphinx <https://www.sphinx-doc.org/en/master/>`_.
+The DeepView docs are built with `Sphinx <https://www.sphinx-doc.org/en/master/>`_.
 
 Update dev environment
 ######################
-1. If DNIKit was installed with ``make install``, the developer's installation, all
+1. If DeepView was installed with ``make install``, the developer's installation, all
 `Sphinx <https://www.sphinx-doc.org/en/master/>`_ dependencies for building the docs will
-already be installed. If DNIKit was installed via pypi & pip, install documentation requirements via::
+already be installed. If DeepView was installed via pypi & pip, install documentation requirements via::
 
-    pip install "dnikit[doc]"
+    pip install "deepview[doc]"
 
 2. Install `pandoc <https://pandoc.org/installing.html>`_.
 
@@ -131,30 +131,30 @@ All code for docs is stored in the :code:`docs/` folder:
 - :code:`api/`: all API docs
 - :code:`dev/`
 
-    - contributing: Developer's guide for installing and contributing back to DNIKit
+    - contributing: Developer's guide for installing and contributing back to DeepView
 
 - :code:`general/`: intro / start pages
 
-    - installation: full DNIKit installation
-    - support: how to get support on DNIKit
+    - installation: full DeepView installation
+    - support: how to get support on DeepView
     - example_notebooks: quick links to all example notebooks
 
-- :code:`how_to/`: guides on some the fundamental DNIKit concepts
+- :code:`how_to/`: guides on some the fundamental DeepView concepts
 
-    - connect_data: how to connect data into DNIKit
-    - connect_model: how to load model into a DNIKit pipeline
-    - introspect: understand DNIKit "introspect"
+    - connect_data: how to connect data into DeepView
+    - connect_model: how to load model into a DeepView pipeline
+    - introspect: understand DeepView "introspect"
 
 - :code:`img/`: graphics (.png, .gif, .jpg, .jpeg currently tracked with `git lfs <https://git-lfs.github.com>`_)
 
-- :code:`introspectors/`: algorithm pages for the various DNIKit introspectors
+- :code:`introspectors/`: algorithm pages for the various DeepView introspectors
 
 - :code:`reference/`:
 
     - changelog: link to CHANGELOG.md
-    - how_to_cite: information for citing DNIKit + its various algorithms
+    - how_to_cite: information for citing DeepView + its various algorithms
 
-- :code:`utils/`: API reference for certain DNIKit components
+- :code:`utils/`: API reference for certain DeepView components
 
     - data_producers: all built-in producers
     - pipeline_stages: useful pipeline stages (including processors)
@@ -175,7 +175,7 @@ the notebooks from scratch, which can be quite time consuming.
 
 Build docs locally
 ##################
-From the base ``dnikit`` directory run::
+From the base ``deepview`` directory run::
 
     make doc
 
@@ -212,11 +212,11 @@ This project uses `pytest`_ and pytest extensions as follows:
 +-------------------------------------------+---------------------------------+--------------------------------+
 
 .. _pytest: https://docs.pytest.org/en/latest/
-.. _pyini: https://github.com/apple/dnikit/blob/main/pytest.ini
+.. _pyini: https://github.com/apple/deepview/blob/main/pytest.ini
 
 .. _mypy: http://mypy-lang.org
 .. _pymypy: https://pypi.org/project/pytest-mypy/
-.. _myini: https://github.com/apple/dnikit/blob/main/mypy.ini
+.. _myini: https://github.com/apple/deepview/blob/main/mypy.ini
 
 .. _flake8: http://flake8.pycqa.org/en/latest/
 .. _pyfl8: https://pypi.org/project/pytest-flake8/
@@ -245,7 +245,7 @@ Remove all generated files::
 
 Submitting a Pull Request
 -------------------------
-`Submit a new request <https://github.com/apple/dnikit/pulls>`_.
+`Submit a new request <https://github.com/apple/deepview/pulls>`_.
 
 A new pull request requires checking off the following list:
 

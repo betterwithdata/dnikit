@@ -2,26 +2,26 @@
 Typing
 ======
 
-This module contains all DNIKit custom types.
+This module contains all DeepView custom types.
 
-.. automodule:: dnikit.typing
+.. automodule:: deepview.typing
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. py:data:: dnikit.typing.OneOrMany
+.. py:data:: deepview.typing.OneOrMany
 
 alias of Union[_T, Collection[_T]]
 
-.. py:data:: dnikit.typing.OneManyOrNone
+.. py:data:: deepview.typing.OneManyOrNone
 
 alias of Union[None, _T, Collection[_T]]
 
-.. py:data:: dnikit.typing.PathOrStr
+.. py:data:: deepview.typing.PathOrStr
 
 alias of Union[str, pathlib.Path]
 
-.. py:data:: dnikit.typing.StringLike
+.. py:data:: deepview.typing.StringLike
 
 alias of Any.
 Similar to "array like" -- these are types that can be losslessly converted

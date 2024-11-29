@@ -1,7 +1,7 @@
-DNIKit – Data and Network Introspection Kit
+DeepView – Data and Network Introspection Kit
 ===========================================
 
-A Python toolkit for analyzing machine learning models and datasets. DNIKit can:
+A Python toolkit for analyzing machine learning models and datasets. DeepView can:
 
 - :ref:`create a comprehensive dataset analysis report <dataset_report>`
 - :ref:`identify duplicate data samples <duplicates>`
@@ -10,14 +10,14 @@ A Python toolkit for analyzing machine learning models and datasets. DNIKit can:
 - :ref:`detect inactive units in a model (e.g., due to dying ReLU) <inactive_units>`
 - :ref:`...and more <how_to_introspect>`.
 
-DNIKit algorithms (also known as **introspectors**) view data
+DeepView algorithms (also known as **introspectors**) view data
 *through the eyes of a neural network*. They operate using intermediate responses
 of the networks to provide a unique glimpse of how the network perceives
 data throughout the different stages of computation.
 
 .. image:: img/responses.gif
    :scale: 50 %
-   :alt: Intermediate responses are extracted from models and used in DNIKit algorithms.
+   :alt: Intermediate responses are extracted from models and used in DeepView algorithms.
    :align: center
    :class: bot-margin
 
@@ -25,12 +25,12 @@ Getting Started
 ---------------
 Explore the links in the sidebar on the left. Here are some good places to get started:
 
-- :ref:`DNIKit Installation Page <python_support>`
-- :ref:`How To Use DNIKit, starting with loading a model <connect_your_model>`
+- :ref:`DeepView Installation Page <python_support>`
+- :ref:`How To Use DeepView, starting with loading a model <connect_your_model>`
 - :ref:`Jupyter notebook examples <example_notebooks>`
-- :ref:`How to Cite DNIKit <how_to_cite>`
+- :ref:`How to Cite DeepView <how_to_cite>`
 
-and see the following DNIKit use case examples.
+and see the following DeepView use case examples.
 
 Examples
 --------
@@ -91,10 +91,10 @@ save the model to disk with :code:`model.save("mnist.h5")`, then run:
 
 .. code-block:: python
 
-    from dnikit.base import pipeline, TrainTestSplitProducer
-    from dnikit_tensorflow import load_tf_model_from_path
+    from deepview.base import pipeline, TrainTestSplitProducer
+    from deepview_tensorflow import load_tf_model_from_path
 
-    # Load model into DNIKit
+    # Load model into DeepView
     dni_model = load_tf_model_from_path('mnist.h5')
 
     # Get Conv2D layer names to request responses from
@@ -181,7 +181,7 @@ for more information about the experiments.
    :maxdepth: 2
    :caption: How to Use
 
-   1. DNIKit overview <how_to/dnikit_concepts>
+   1. DeepView overview <how_to/deepview_concepts>
    2. Load a model <how_to/connect_model>
    3. Load data <how_to/connect_data>
    4. Introspect <how_to/introspect>

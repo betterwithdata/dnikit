@@ -29,15 +29,15 @@ Please see the :ref:`full description of the algorithm below <alg-familiarity>`.
 General Usage
 -------------
 
-For getting started with DNIKit code, please see the :ref:`how-to pages <connect_your_model>`.
+For getting started with DeepView code, please see the :ref:`how-to pages <connect_your_model>`.
 
-Assuming a :func:`pipeline <dnikit.base.pipeline>` is
+Assuming a :func:`pipeline <deepview.base.pipeline>` is
 set up to produce responses from a model,
-:class:`Familiarity <dnikit.introspectors.Familiarity>` can be run like so:
+:class:`Familiarity <deepview.introspectors.Familiarity>` can be run like so:
 
 .. code-block:: python
 
-   from dnikit.introspectors import Familiarity
+   from deepview.introspectors import Familiarity
 
    producer = ...  # pipeline setup here
 
@@ -63,8 +63,8 @@ Preparing input to introspection usually requires two things:
 a probability *model* instead of a concrete result (a Gaussian mixture model (GMM) built around the
 input data, see :ref:`below <alg-familiarity>`).
 To compute `Familiarity` score for each data sample, or the probability of a data sample according
-to the GMM, the built model in a DNIKit
-:class:`pipeline <dnikit.base.pipeline>` will need to be applied to the data to be scored.
+to the GMM, the built model in a DeepView
+:class:`pipeline <deepview.base.pipeline>` will need to be applied to the data to be scored.
 
 Full example
 ~~~~~~~~~~~~
@@ -77,10 +77,10 @@ for the least and most representative data samples, using a model not trained on
 
 .. code-block:: python
 
-   from dnikit_tensorflow import TFDatasetExamples, TFModelExamples
-   from dnikit.introspectors import Familiarity, DimensionReduction
-   from dnikit.processors import Cacher, ImageResizer
-   from dnikit.base import pipeline
+   from deepview_tensorflow import TFDatasetExamples, TFModelExamples
+   from deepview.introspectors import Familiarity, DimensionReduction
+   from deepview.processors import Cacher, ImageResizer
+   from deepview.base import pipeline
 
    # Load CIFAR10 dataset and feed into MobileNet,
    # observing responses from layer conv_pw_13
@@ -115,7 +115,7 @@ for the least and most representative data samples, using a model not trained on
 Exploring results
 ~~~~~~~~~~~~~~~~~
 
-:class:`Familiarity.introspect <dnikit.base.introspectors.Familiarity>` returns
+:class:`Familiarity.introspect <deepview.base.introspectors.Familiarity>` returns
 a *model* instead of a concrete result. For the result to be useful, data must be *scored*
 by feeding it through the familiarity model; e.g., in the context of the earlier example code:
 
@@ -123,7 +123,7 @@ by feeding it through the familiarity model; e.g., in the context of the earlier
 
     scored_producer = pipeline(reduced_producer, familiarity)
 
-This will attach metadata to each :class:`Batch <dnikit.base.Batch>` of data
+This will attach metadata to each :class:`Batch <deepview.base.Batch>` of data
 containing the scores for each sample, accessed via the metadata :code:`familiarity.meta_key`:
 
 .. code-block:: python
@@ -145,18 +145,18 @@ The scoring is a separate step from the initial `Familiarity` model creation bec
 Familiarity strategies
 ~~~~~~~~~~~~~~~~~~~~~~
 
-:class:`Familiarity.introspect <dnikit.introspectors.Familiarity.introspect>` accepts
+:class:`Familiarity.introspect <deepview.introspectors.Familiarity.introspect>` accepts
 a ``strategy`` keyword argument that can be either the
-:class:`Familiarity.Strategy.GMM <dnikit.introspectors.Familiarity.Strategy.GMM>` strategy
+:class:`Familiarity.Strategy.GMM <deepview.introspectors.Familiarity.Strategy.GMM>` strategy
 or a custom strategy that follows the
-:class:`FamiliarityStrategyType <dnikit.introspectors.FamiliarityStrategyType>` protocol.
+:class:`FamiliarityStrategyType <deepview.introspectors.FamiliarityStrategyType>` protocol.
 See below for more information about each.
 
 GMM (Gaussian Mixture Model)
 ****************************
 
 Fits a multivariate Gaussian Mixture Model.
-:class:`GMM <dnikit.introspectors.Familiarity.Strategy.GMM>` is a parametric density
+:class:`GMM <deepview.introspectors.Familiarity.Strategy.GMM>` is a parametric density
 estimation method.
 
 The most important parameter is the number of gaussians (``gaussian_count``) to be learned. A
@@ -164,16 +164,16 @@ The most important parameter is the number of gaussians (``gaussian_count``) to 
 fitting should stop (the lower the more accurate, but longer fitting time). Additionally, the
 number of fitting iterations can be set through ``max_iterations``.
 
-The :class:`GMM <dnikit.introspectors.Familiarity.Strategy.GMM>` strategy is suitable when it's
+The :class:`GMM <deepview.introspectors.Familiarity.Strategy.GMM>` strategy is suitable when it's
 known that the underlying PDF might be Gaussian (or close). However, for PDFs that are strongly
 non-gaussian, a non-parametric approach might be more suitable.
 
 It's recommended to fit a DMM with diagonal covariance
-(:class:`DIAG <dnikit.introspectors.GMMCovarianceType.DIAG>`) when the data dimensionality is high,
+(:class:`DIAG <deepview.introspectors.GMMCovarianceType.DIAG>`) when the data dimensionality is high,
 to avoid overfitting and numerical instabilities. Else, use full covariance
-(:class:`FULL <dnikit.introspectors.GMMCovarianceType.FULL>`).
+(:class:`FULL <deepview.introspectors.GMMCovarianceType.FULL>`).
 
-Code sample for :class:`GMM <dnikit.introspectors.Familiarity.Strategy.GMM>` familiarity
+Code sample for :class:`GMM <deepview.introspectors.Familiarity.Strategy.GMM>` familiarity
 with typical parameters:
 
 .. code-block:: python
@@ -191,7 +191,7 @@ with typical parameters:
 Custom Strategy
 ***************
 It is also possible to define a custom Familiarity strategy that follows the
-:class:`FamiliarityStrategyType <dnikit.introspectors.FamiliarityStrategyType>` protocol.
+:class:`FamiliarityStrategyType <deepview.introspectors.FamiliarityStrategyType>` protocol.
 
 .. _description-familiarity:
 
@@ -208,7 +208,7 @@ coupled with the model that *learns* from it, and this dependency
 should not be omitted during data inspection, since it is the model that
 will make the final decisions.
 
-DNIKit's `Familiarity` introspector finds the most/least
+DeepView's `Familiarity` introspector finds the most/least
 representative data samples in a given dataset or within a certain class.
 Instead of learning the distribution of the raw data, it learns the
 **distribution of the embedding space** generated by a layer of a DNN
@@ -218,7 +218,7 @@ perform differently depending on the layer chosen.
 
 Sometimes, for practical reasons, it is advisable to reduce the
 dimensionality of the representations using a
-:class:`dimension reduction <dnikit.introspectors.DimensionReduction>`
+:class:`dimension reduction <deepview.introspectors.DimensionReduction>`
 algorithm. Typical values for the reduced dimensionality are between 40 and 100,
 but it depends on the use case.
 
@@ -289,7 +289,7 @@ in the distributions:
    of data samples across training and test sets, or collecting more data to bring the
    distributions together. **Note:** this evaluation will not help if both the training and test
    sets are poor representations of the target use case, but hopefully other dataset errors can be
-   caught with some of the other dataset analysis tools in DNIKit.
+   caught with some of the other dataset analysis tools in DeepView.
 2. **Original dataset with new data**: More data can be collected to bring the distributions
    together, and further inspect the root cause of the distribution gap using `Familiarity`'s
    :ref:`Dataset errors / rare samples analysis <Use Case - Finding Dataset Errors>`.
@@ -308,7 +308,7 @@ Algorithm
 Knowing the probability density function (PDF or :math:`p(x)`) underlying the observed data is of
 great importance for many ML domains. For example, the key idea behind algorithms like GAN or VAE
 is to estimate the PDF of the data as accurately as possible. However, learning a PDF in high
-dimensions is not trivial; furthermore the data available is typically limited. DNIKit provides
+dimensions is not trivial; furthermore the data available is typically limited. DeepView provides
 different strategies to learn the probability density function of a dataset, designed to work with
 1D data (i.e. responses from a DNN layer). This set of strategies is called **Familiarity**.
 
@@ -356,10 +356,10 @@ Example
 Relevant API
 ------------
 
-- :class:`Familiarity <dnikit.introspectors.Familiarity>`
-- :class:`GMM strategy <dnikit.introspectors.Familiarity.Strategy.GMM>`
-- :class:`FamiliarityStrategyType <dnikit.introspectors.FamiliarityStrategyType>`
-- :class:`DimensionReduction <dnikit.introspectors.DimensionReduction>`
+- :class:`Familiarity <deepview.introspectors.Familiarity>`
+- :class:`GMM strategy <deepview.introspectors.Familiarity.Strategy.GMM>`
+- :class:`FamiliarityStrategyType <deepview.introspectors.FamiliarityStrategyType>`
+- :class:`DimensionReduction <deepview.introspectors.DimensionReduction>`
 
 Useful external links
 ~~~~~~~~~~~~~~~~~~~~~

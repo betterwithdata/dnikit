@@ -1,23 +1,23 @@
 .. _how_to_cite:
 
 =============
-Citing DNIKit
+Citing DeepView
 =============
 
-The general general DNIKit publication can be cited as:
+The general general DeepView publication can be cited as:
 
 - Welsh, Megan Maher; Koski, David; Sarabia, Miguel; Sivakumar, Niv; Arawjo, Ian; Joshi, Aparna;
   Doumbouya, Moussa; Suau, Xavier; Zappella, Luca; Apostoloff, Nicholas (2023).
-  `"Data and Network Introspection Kit" <https://github.com/apple/dnikit>`_;
-  *https://github.com/apple/dnikit.*
+  `"Data and Network Introspection Kit" <https://github.com/apple/deepview>`_;
+  *https://github.com/apple/deepview.*
 
 .. code-block::
 
-   @online{DNIKit,
+   @online{DeepView,
         author = {Welsh, Megan Maher; Koski, David; Sarabia, Miguel; Sivakumar, Niv; Arawjo, Ian; Joshi, Aparna; Doumbouya, Moussa; Suau, Xavier; Zappella, Luca; Apostoloff, Nicholas},
         title = {Data and Network Introspection Kit},
         year = 2023,
-        url = {https://github.com/apple/dnikit},
+        url = {https://github.com/apple/deepview},
    }
 
 In addition, there are possible additional citations to include for each specific introspector
@@ -32,18 +32,18 @@ PFA:
    `"Filter distillation for network compression." <https://arxiv.org/abs/1807.10585>`_
    In *Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision,* pp. 3140-3149. 2020.
 DimensionReduction Strategy ``TSNE``:
-  - This is not a DNIKit citation, but here is the reference for TSNE:
+  - This is not a DeepView citation, but here is the reference for TSNE:
       - Van der Maaten, L.J.P.; Hinton, G.E. (Nov 2008). "Visualizing Data Using t-SNE" (PDF). Journal of Machine Learning Research. 9: 2579–2605.
 DimensionReduction Strategy ``UMAP``:
-  - This is not a DNIKit citation, but here is the reference for UMAP:
+  - This is not a DeepView citation, but here is the reference for UMAP:
       - McInnes, Leland; Healy, John; Melville, James (2018-12-07). "Uniform manifold approximation and projection for dimension reduction". arXiv:1802.03426.
 DimensionReduction Strategy ``PacMAP``:
-  - This is not a DNIKit citation, but here is the reference for PacMAP:
+  - This is not a DeepView citation, but here is the reference for PacMAP:
       - Yingfan Wang, Haiyang Huang, Cynthia Rudin, & Yaron Shaposhnik (2021).
         Understanding How Dimension Reduction Tools Work: An Empirical Approach to Deciphering t-SNE, UMAP, TriMap, and PaCMAP for Data Visualization.
         Journal of Machine Learning Research, 22(201), 1-73.
 Duplicates:
-  - This is not a DNIKit citation, but here is the reference for ANNOY:
+  - This is not a DeepView citation, but here is the reference for ANNOY:
       - Bernhardsson, Erik (2018); "Annoy: Approximate Nearest Neighbors Oh Yeah in C++/Python";
         *https://pypi.org/project/annoy/*.
 IUA:
@@ -51,12 +51,12 @@ IUA:
 Familiarity (no vis):
  - No additional expected citation for this introspector without use of Symphony visualization (see earlier citations)
 
-Example of citing DNIKit
+Example of citing DeepView
 ------------------------
 
 For instance, when using both :ref:`Familiarity analysis <familiarity>`
 and :ref:`PFA for compression <network_compression>`, the following citations are appropriate:
 
-1. the main reference to DNIKit, at the top of this page (Welsh et al. 2023)
+1. the main reference to DeepView, at the top of this page (Welsh et al. 2023)
 2. Bäuerle et al. 2022 for Familiarity,
 3. Cuadros et al. 2020 for PFA

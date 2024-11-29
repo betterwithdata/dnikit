@@ -4,12 +4,12 @@
 Data Producers
 ==============
 
-DNIKit provides a some data :class:`Producers <dnikit.base.Producer>`
-that load data and dispatch batches. All :func:`pipelines <dnikit.base.pipeline>`
+DeepView provides a some data :class:`Producers <deepview.base.Producer>`
+that load data and dispatch batches. All :func:`pipelines <deepview.base.pipeline>`
 must start with a data producer. (Batches
-are only pulled through a :func:`pipeline <dnikit.base.pipeline>`
+are only pulled through a :func:`pipeline <deepview.base.pipeline>`
 when an :ref:`Introspector's <how_to_introspect>`
-:attr:`.introspect() <dnikit.base.Introspector.introspect>` method is called.)
+:attr:`.introspect() <deepview.base.Introspector.introspect>` method is called.)
 
 Here are most of the available out-of-the-box data loaders,
 and links to their API for more information.
@@ -17,25 +17,25 @@ and links to their API for more information.
 Example Datasets
 ----------------
 
-:mod:`dnikit_tensorflow` has several example datasets, which wrap
+:mod:`deepview_tensorflow` has several example datasets, which wrap
 off-the-shelf datasets from the `Keras <https://keras.io/about/>`_ library.
-They are loaded via the :class:`TFDatasetExamples <dnikit_tensorflow.TFDatasetExamples>`:
+They are loaded via the :class:`TFDatasetExamples <deepview_tensorflow.TFDatasetExamples>`:
 
 .. code-block:: python
 
-    from dnikit_tensorflow import TFDatasetExamples
+    from deepview_tensorflow import TFDatasetExamples
 
     cifar10 = TFDatasetExamples.CIFAR10()
 
-Available datasets are: :class:`CIFAR10 <dnikit_tensorflow.TFDatasetExamples.CIFAR10>`,
-:class:`CIFAR100 <dnikit_tensorflow.TFDatasetExamples.CIFAR100>`,
-:class:`MNIST <dnikit_tensorflow.TFDatasetExamples.MNIST>`, and
-:class:`FashionMNIST <dnikit_tensorflow.TFDatasetExamples.FashionMNIST>`.
+Available datasets are: :class:`CIFAR10 <deepview_tensorflow.TFDatasetExamples.CIFAR10>`,
+:class:`CIFAR100 <deepview_tensorflow.TFDatasetExamples.CIFAR100>`,
+:class:`MNIST <deepview_tensorflow.TFDatasetExamples.MNIST>`, and
+:class:`FashionMNIST <deepview_tensorflow.TFDatasetExamples.FashionMNIST>`.
 
-All example datasets are :class:`TrainTestSplitProducers <dnikit.base.TrainTestSplitProducer>`
-with :meth:`attach_metadata <dnikit.base.TrainTestSplitProducer.attach_metadata>` and :meth:`max_samples <dnikit.base.TrainTestSplitProducer.max_samples>` initialization parameters,
-and :meth:`shuffle <dnikit.base.TrainTestSplitProducer.shuffle>` and
-:meth:`subset <dnikit.base.TrainTestSplitProducer.subset>` methods. For instance,
+All example datasets are :class:`TrainTestSplitProducers <deepview.base.TrainTestSplitProducer>`
+with :meth:`attach_metadata <deepview.base.TrainTestSplitProducer.attach_metadata>` and :meth:`max_samples <deepview.base.TrainTestSplitProducer.max_samples>` initialization parameters,
+and :meth:`shuffle <deepview.base.TrainTestSplitProducer.shuffle>` and
+:meth:`subset <deepview.base.TrainTestSplitProducer.subset>` methods. For instance,
 the following code loads MNIST, then creates a subset of 100 fives drawn only from the test set:
 
 .. code-block:: python
@@ -50,7 +50,7 @@ the following code loads MNIST, then creates a subset of 100 fives drawn only fr
         dataset_ids = batch.metadata[Batch.StdKeys.LABELS]["dataset"]  # will be all 1's
 
 In addition, CIFAR10, CIFAR100 and FashionMNIST accept string labels
-on the :meth:`subset <dnikit.base.TrainTestSplitProducer.subset>` method, e.g. to load all foxes from CIFAR100:
+on the :meth:`subset <deepview.base.TrainTestSplitProducer.subset>` method, e.g. to load all foxes from CIFAR100:
 
 .. code-block:: python
 
@@ -62,27 +62,27 @@ To check what string labels an example dataset supports, the built-in Keras data
 Data loaders
 ------------
 
-:class:`ImageProducer <dnikit.base.ImageProducer>`
+:class:`ImageProducer <deepview.base.ImageProducer>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-DNIKit provides a helper producer, :class:`ImageProducer <dnikit.base.ImageProducer>`,
+DeepView provides a helper producer, :class:`ImageProducer <deepview.base.ImageProducer>`,
 to load all images from a local directory. By default, it will do a
 recursive search through all subdirectories. For example, if
 the MNIST dataset is stored locally:
 
 .. code-block:: python
 
-    from dnikit.base import ImageProducer
+    from deepview.base import ImageProducer
 
     mnist_dataset = ImageProducer('path/to/mnist/directory')
 
-.. autoclass:: dnikit.base.ImageProducer
+.. autoclass:: deepview.base.ImageProducer
     :noindex:
 
-:class:`TrainTestSplitProducer <dnikit.base.TrainTestSplitProducer>`
+:class:`TrainTestSplitProducer <deepview.base.TrainTestSplitProducer>`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: dnikit.base.TrainTestSplitProducer
+.. autoclass:: deepview.base.TrainTestSplitProducer
     :noindex:
 
 .. _creating_custom_producer:
@@ -90,12 +90,12 @@ the MNIST dataset is stored locally:
 Writing a custom Producer
 -------------------------
 
-To teach DNIKit how to load data as batches, it's possible to create a custom
-producer by subclassing :class:`Producer <dnikit.base.Producer>`.
+To teach DeepView how to load data as batches, it's possible to create a custom
+producer by subclassing :class:`Producer <deepview.base.Producer>`.
 Here is an example of creating a custom Producer for the
 `CIFAR-10 dataset <https://keras.io/api/datasets/cifar10/>`_.
 
-DNIKit operates on datasets in batches, so that it can handle large-scale datasets
+DeepView operates on datasets in batches, so that it can handle large-scale datasets
 without loading everything into memory at once. For each batch, it's possible to also
 attach metadata like unique identifiers and labels, which help in
 :ref:`data introspector <data_introspection>` analysis and visualization features:
@@ -119,7 +119,7 @@ how to create a custom producer.
     import cv2
     from keras.datasets import cifar10
 
-    from dnikit.base import Producer, Batch
+    from deepview.base import Producer, Batch
 
     class Cifar10Producer(Producer):
 
@@ -205,8 +205,8 @@ As noted, a Producer can also produce model responses to feed directly into an I
 
 .. code-block:: python
 
-    from dnikit.base import Producer, Batch
-    from dnikit.introspectors import Familiarity
+    from deepview.base import Producer, Batch
+    from deepview.introspectors import Familiarity
 
     def function_to_run_model_inference_on_batch(data: np.ndarray, response_name: str) -> np.ndarray:
         # extract `response_name` for data when running through dummy model
@@ -232,5 +232,5 @@ As noted, a Producer can also produce model responses to feed directly into an I
     ...
 
 This is a good option if model responses have already been generated and saved,
-the model is in a format that DNIKit does not currently support (e.g., JAX), or
+the model is in a format that DeepView does not currently support (e.g., JAX), or
 the model is hosted on the cloud and responses will be fetched asynchronously.

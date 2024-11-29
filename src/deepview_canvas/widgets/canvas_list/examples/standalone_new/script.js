@@ -1,0 +1,1 @@
+import {StandaloneApp} from "./widgets/StandaloneApp.js";import {CanvasList} from "./widgets/CanvasList.js";const components = {CanvasList: CanvasList,};const app = new StandaloneApp({target: document.body,props: {components: components,},});export default app;

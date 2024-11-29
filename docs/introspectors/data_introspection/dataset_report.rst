@@ -5,8 +5,8 @@ Dataset Report
 ==============
 
 Explore a dataset to find rare data samples, duplicate data, annotation errors,
-or dataset bias. The :class:`DatasetReport <dnikit.introspectors.DatasetReport>` is a combination of
-three DNIKit dataset introspection algorithms:
+or dataset bias. The :class:`DatasetReport <deepview.introspectors.DatasetReport>` is a combination of
+three DeepView dataset introspection algorithms:
 
 - :ref:`Familiarity <familiarity>`
 - :ref:`Duplicates <duplicates>`
@@ -21,14 +21,14 @@ For motivation behind the Dataset Report, see :ref:`Description` below.
 General Usage
 -------------
 
-For getting started with DNIKit code, please see the :ref:`how-to pages <connect_your_model>`.
+For getting started with DeepView code, please see the :ref:`how-to pages <connect_your_model>`.
 
-Assuming a :func:`pipeline <dnikit.base.pipeline>` is
+Assuming a :func:`pipeline <deepview.base.pipeline>` is
 set up to produce responses from a model, the `DatasetReport` can be run as so:
 
 .. code-block:: python
 
-   from dnikit.introspectors import DatasetReport
+   from deepview.introspectors import DatasetReport
 
    producer = ...  # pipeline setup here
 
@@ -43,10 +43,10 @@ MobileNet model to run the analysis:
 
 .. code-block:: python
 
-   from dnikit.introspectors import DatasetReport
-   from dnikit_tensorflow import TFDatasetExamples, TFModelExamples
-   from dnikit.processors import Cacher, ImageResizer
-   from dnikit.base import pipeline
+   from deepview.introspectors import DatasetReport
+   from deepview_tensorflow import TFDatasetExamples, TFModelExamples
+   from deepview.processors import Cacher, ImageResizer
+   from deepview.base import pipeline
 
    # Load CIFAR10 dataset and feed into MobileNet,
    # observing responses from layer conv_pw_13
@@ -69,7 +69,7 @@ Visualization
 Exploring with Symphony
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-DNIKit's DatasetReport can also connect with the Symphony UI framework
+DeepView's DatasetReport can also connect with the Symphony UI framework
 to explore a dataset in a web browser or in a jupyter notebook. Please see Symphony's
 `documentation <https://github.com/apple/ml-symphony>`_ for an example of how to feed the
 output of ``DatasetReport.introspect`` directly into Symphony.
@@ -77,17 +77,17 @@ These reports created with Symphony are interactive and shareable.
 
 .. warning::
     The current release of `Symphony <https://github.com/apple/ml-symphony>`_ operates only on images, audio, and tabular data.
-    To visualize other data types, it's possible to run the DNIKit side of the
+    To visualize other data types, it's possible to run the DeepView side of the
     `DatasetReport` on any dataset type and visualize in a custom manner.
 
-    ``pip install "dnikit[dataset-report]"``
+    ``pip install "deepview[dataset-report]"``
 
 
 Exploring as Pandas DataFrame
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The resulting :class:`Dataset Report <dnikit.introspectors.DatasetReport>` object has a property,
-:attr:`data <dnikit.introspectors.DatasetReport.data>`, that is a
+The resulting :class:`Dataset Report <deepview.introspectors.DatasetReport>` object has a property,
+:attr:`data <deepview.introspectors.DatasetReport.data>`, that is a
 `Pandas DataFrame <https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html>`_
 of all `DatasetReport` results. Each row represents a data sample, and each column is report data,
 e.g., duplicate set.
@@ -101,23 +101,23 @@ These results can be visualized in a custom manner, but it's recommended to try
 
 Saving and Loading
 ------------------
-To save the report, call :func:`to_disk() <dnikit.introspectors.DatasetReport.to_disk>`
+To save the report, call :func:`to_disk() <deepview.introspectors.DatasetReport.to_disk>`
 on the report object.
 To load a saved report, use
-:func:`DatasetReport.from_disk(filepath) <dnikit.introspectors.DatasetReport.from_disk>`.
+:func:`DatasetReport.from_disk(filepath) <deepview.introspectors.DatasetReport.from_disk>`.
 
 Config Options
 --------------
 
-Dataset Report's :func:`introspect <dnikit.introspectors.DatasetReport.introspect>`
+Dataset Report's :func:`introspect <deepview.introspectors.DatasetReport.introspect>`
 method has a parameter :code:`config` that accepts a
-:class:`ReportConfig <dnikit.introspectors.ReportConfig>` object. The config can be
+:class:`ReportConfig <deepview.introspectors.ReportConfig>` object. The config can be
 used to run only a subset of introspectors. For instance,
 to run only duplicates analysis:
 
 .. code-block:: python
 
-    from dnikit.introspectors import DatasetReport, ReportConfig
+    from deepview.introspectors import DatasetReport, ReportConfig
 
     config = ReportConfig(
         projection=None,
@@ -125,7 +125,7 @@ to run only duplicates analysis:
     )
 
 The strategies used in the underlying algorithms can also be modified via the config.
-See :class:`ReportConfig <dnikit.introspectors.ReportConfig>` in the API docs for more details.
+See :class:`ReportConfig <deepview.introspectors.ReportConfig>` in the API docs for more details.
 
 
 Description
@@ -162,8 +162,8 @@ A Jupyter notebook that demonstrates how to run the Dataset Report on the CIFAR-
 
 Relevant API
 ------------
-* :class:`Dataset Report  <dnikit.introspectors.DatasetReport>`
-* :class:`Dataset Report Config  <dnikit.introspectors.ReportConfig>`
-* :class:`Familiarity <dnikit.introspectors.Familiarity>`
-* :class:`DimensionReduction <dnikit.introspectors.DimensionReduction>`
-* :class:`Duplicates <dnikit.introspectors.Duplicates>`
+* :class:`Dataset Report  <deepview.introspectors.DatasetReport>`
+* :class:`Dataset Report Config  <deepview.introspectors.ReportConfig>`
+* :class:`Familiarity <deepview.introspectors.Familiarity>`
+* :class:`DimensionReduction <deepview.introspectors.DimensionReduction>`
+* :class:`Duplicates <deepview.introspectors.Duplicates>`

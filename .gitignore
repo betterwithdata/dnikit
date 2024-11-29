@@ -125,7 +125,7 @@ dmypy.json
 # unit test junit xml reports
 junit*.xml
 
-# DNIKit code coverage reports
+# DeepView code coverage reports
 coverage_*
 
 # temp files

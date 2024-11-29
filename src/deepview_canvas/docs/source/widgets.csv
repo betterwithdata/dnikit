@@ -1,0 +1,12 @@
+Component|Description|Package
+Binary Confusion Matrix | .. mdinclude:: ../../widgets/canvas_binary_confusion_matrix/README.md | `canvas_binary_confusion_matrix <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_binary_confusion_matrix>`__
+Data Map | .. mdinclude:: ../../widgets/canvas_data_map/README.md | `canvas_data_map <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_data_map>`__
+Duplicates | .. mdinclude:: ../../widgets/canvas_duplicates/README.md | `canvas_duplicates <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_duplicates>`__
+FairVis | .. mdinclude:: ../../widgets/canvas_fairvis/README.md | `canvas_fairvis <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_fairvis>`__
+Familiarity | .. mdinclude:: ../../widgets/canvas_familiarity/README.md | `canvas_familiarity <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_familiarity>`__ 
+Hierarchical Confusion Matrix | .. mdinclude:: ../../widgets/canvas_hierarchical_confusion_matrix/README.md | `canvas_hierarchical_confusion_matrix <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_hierarchical_confusion_matrix>`__
+List | .. mdinclude:: ../../widgets/canvas_list/README.md | `canvas_list <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_list>`__ 
+Markdown | .. mdinclude:: ../../widgets/canvas_markdown/README.md | `canvas_markdown <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_markdown>`__
+Scatterplot | .. mdinclude:: ../../widgets/canvas_scatterplot/README.md | `canvas_scatterplot <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_scatterplot>`__
+Summary | .. mdinclude:: ../../widgets/canvas_summary/README.md | `canvas_summary <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_summary>`__
+Vega | .. mdinclude:: ../../widgets/canvas_vega/README.md | `canvas_vega <https://github.com/betterwithdata/ml-canvas/tree/main/widgets/canvas_vega>`__

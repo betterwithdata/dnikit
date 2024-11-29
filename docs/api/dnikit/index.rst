@@ -1,8 +1,8 @@
 ==========
-``dnikit``
+``deepview``
 ==========
 
-The DNIKit API is split into a few logical sections:
+The DeepView API is split into a few logical sections:
 
 * :ref:`Base structures<Base API>`
 * :ref:`Processors <Processors API>`

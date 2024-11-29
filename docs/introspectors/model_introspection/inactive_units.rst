@@ -14,13 +14,13 @@ please see the :ref:`Description and Algorithm sections below <description-iua>`
 General Usage
 -------------
 
-Assuming a :func:`pipeline <dnikit.base.pipeline>` has been
+Assuming a :func:`pipeline <deepview.base.pipeline>` has been
 set up to produce responses from a model,
-:class:`IUA <dnikit.introspectors.IUA>` can be run as so:
+:class:`IUA <deepview.introspectors.IUA>` can be run as so:
 
 .. code-block:: python
 
-   from dnikit.introspectors import IUA
+   from deepview.introspectors import IUA
 
    producer = ...  # pipeline setup here
 
@@ -33,16 +33,16 @@ inputs to introspection should be prepared by selecting multiple
 **layer responses** to analyze. Specifically, units of these layers will be
 introspected. For instance, for a model
 that uses Conv2D layers, one option could be selecting all the responses
-for those layers by reviewing the DNIKit :class:`Model <dnikit.base.Model>`'s
-:func:`.response_infos() <dnikit.base.Model.response_infos>` and passing them where the model is
+for those layers by reviewing the DeepView :class:`Model <deepview.base.Model>`'s
+:func:`.response_infos() <deepview.base.Model.response_infos>` and passing them where the model is
 used in the pipeline, e.g.:
 
 .. code-block:: python
 
-   dnikit_model = ... # load model here
+   deepview_model = ... # load model here
 
    # Find only conv2d layer responses
-   response_infos = dnikit_model.response_infos()
+   response_infos = deepview_model.response_infos()
    conv_response_names = [
         info.name
         for info in response_infos.values()
@@ -53,14 +53,14 @@ used in the pipeline, e.g.:
         dataset,
         ...
         # Tell the model which responses to look at
-        dnikit_model(conv_response_names),
+        deepview_model(conv_response_names),
         ...
    )
 
 Visualization
 -------------
 
-The result of :func:`IUA.introspect <dnikit.introspectors.IUA.introspect>`
+The result of :func:`IUA.introspect <deepview.introspectors.IUA.introspect>`
 can be shown with :code:`IUA.show()` directly, e.g.:
 
 .. code-block:: python
@@ -88,8 +88,8 @@ a heatmap of activations:
 Config options
 --------------
 
-Like all introspectors, :class:`IUA <dnikit.introspectors.IUA>` takes
-a :class:`Producer <dnikit.base.Producer>`
+Like all introspectors, :class:`IUA <deepview.introspectors.IUA>` takes
+a :class:`Producer <deepview.base.Producer>`
 as its first argument and an optional :code:`batch_size` keyword argument
 to set the size of batches pulled from the producer.
 
@@ -138,11 +138,11 @@ identify when all (or nearly all) units in a layer are dead, e.g. after a ReLU.
          dead neurons.
    :align: center
 
-Usage in DNIKit, see :class:`IUA API <dnikit.introspectors.IUA>` for more information.
+Usage in DeepView, see :class:`IUA API <deepview.introspectors.IUA>` for more information.
 
 .. code-block:: python
 
-    from dnikit.introspectors import IUA
+    from deepview.introspectors import IUA
 
     iua_results = IUA.introspect(
         producer=response_producer, # only required arg
@@ -163,4 +163,4 @@ Example
 Relevant API
 ------------
 
-- :class:`IUA introspector <dnikit.introspectors.IUA>`
+- :class:`IUA introspector <deepview.introspectors.IUA>`

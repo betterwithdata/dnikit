@@ -11,9 +11,9 @@ Installation
     .. code-block:: shell
 
        pip install -U pip wheel
-       pip install "dnikit[complete]"
+       pip install "deepview[complete]"
 
-    The preceding command will install the main DNIKit package, TensorFlow2 and PyTorch
+    The preceding command will install the main DeepView package, TensorFlow2 and PyTorch
     compatibility, and requirements to run the notebook examples.
 
     **Note:** For dev installation or to install from a specific branch, refer to the
@@ -24,7 +24,7 @@ Installation
 
 Python Support
 --------------
-DNIKit currently supports Python version 3.7 or greater for macOS or Linux.
+DeepView currently supports Python version 3.7 or greater for macOS or Linux.
 Python 3.9 is recommended. Note: to run TensorFlow 1, install Python 3.7.
 
 To install Python version 3.9 (recommended):
@@ -58,20 +58,20 @@ And update pip and wheel::
 
 Installation with pip
 ----------------------
-The base DNIKit is installed with pip as follows::
+The base DeepView is installed with pip as follows::
 
-    pip install dnikit
+    pip install deepview
 
-DNIKit has additional installation options, which are installed in square brackets, using quotes::
+DeepView has additional installation options, which are installed in square brackets, using quotes::
 
-    pip install "dnikit[dataset-report,tensorflow,...]"
+    pip install "deepview[dataset-report,tensorflow,...]"
 
 Here are the options currently available:
 
 +---------------------------+----------------------------------------------------------------------+
 | Module                    | Description                                                          |
 +===========================+======================================================================+
-| dnikit                    | Always installed, base DNIKit, with                                  |
+| deepview                    | Always installed, base DeepView, with                                  |
 |                           | :ref:`Familiarity <familiarity>`, :ref:`PFA <network_compression>`,  |
 |                           | :ref:`INA <inactive_units>`, and                                     |
 |                           | :ref:`DimensionReduction <dimension_reduction>`.                     |
@@ -86,17 +86,17 @@ Here are the options currently available:
 +---------------------------+----------------------------------------------------------------------+
 | -> [dataset-report]       | Installs all requirements to run the Dataset Report.                 |
 +---------------------------+----------------------------------------------------------------------+
-| -> [tensorflow]           | Installs :ref:`dnikit_tensorflow <tensorflow_api>` and TF2 to load & |
-|                           | run TF_ models within DNIKit.                                        |
+| -> [tensorflow]           | Installs :ref:`deepview_tensorflow <tensorflow_api>` and TF2 to load & |
+|                           | run TF_ models within DeepView.                                        |
 +---------------------------+----------------------------------------------------------------------+
-| -> [tensorflow1]          | Installs :ref:`dnikit_tensorflow <tensorflow_api>` and TF1 to load & |
-|                           | run TF_ models within DNIKit. Must have Python <=3.7 due to TF 1.    |
+| -> [tensorflow1]          | Installs :ref:`deepview_tensorflow <tensorflow_api>` and TF1 to load & |
+|                           | run TF_ models within DeepView. Must have Python <=3.7 due to TF 1.    |
 +---------------------------+----------------------------------------------------------------------+
 | -> [tensorflow1-gpu]      | Same as preceding row, but with TensorFlow GPU. Must have            |
 |                           | Python <=3.7 due to TF 1 constraints.                                |
 +---------------------------+----------------------------------------------------------------------+
-| -> [torch]                | Installs ``dnikit_pytorch``: convert between PyTorch Dataset and     |
-|                           | DNIKit Producer.                                                     |
+| -> [torch]                | Installs ``deepview_pytorch``: convert between PyTorch Dataset and     |
+|                           | DeepView Producer.                                                     |
 +---------------------------+----------------------------------------------------------------------+
 | -> [complete]             | Installs ``notebook``, ``image``, ``dimreduction``,                  |
 |                           | ``dataset-report``, ``tensorflow``, & ``torch`` options.             |
@@ -114,11 +114,11 @@ Running the Jupyter Notebooks Examples
 
 First, install the notebook dependencies::
 
-    pip install "dnikit[notebook]"
+    pip install "deepview[notebook]"
 
 Next, download the
-`DNIKit notebooks directly <https://github.com/apple/dnikit/tree/main/docs/notebooks>`_
-or use them via :ref:`cloning the dnikit repository <Clone the Code>`.
+`DeepView notebooks directly <https://github.com/apple/deepview/tree/main/docs/notebooks>`_
+or use them via :ref:`cloning the deepview repository <Clone the Code>`.
 
 
 Finally, launch jupyter to open the notebooks::
@@ -128,7 +128,7 @@ Finally, launch jupyter to open the notebooks::
 Installation for developers
 ============================
 
-Check out the :ref:`Development Installation` page to install DNIKit for development.
+Check out the :ref:`Development Installation` page to install DeepView for development.
 
 Issues with installation?
 =========================

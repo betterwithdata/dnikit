@@ -1,15 +1,15 @@
 .. _api:
 
 ==========
-DNIKit API
+DeepView API
 ==========
 
-This section details the API of the different DNIKit packages.
+This section details the API of the different DeepView packages.
 
 
 .. toctree::
    :maxdepth: 1
 
-   dnikit/index
+   deepview/index
    tensorflow/index
    torch/index

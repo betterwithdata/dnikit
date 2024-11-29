@@ -15,15 +15,15 @@ For a more thorough discussion of this algorithm and its use, see the
 General Usage
 -------------
 
-For getting started with DNIKit code, please see the :ref:`how-to pages <connect_your_model>`.
+For getting started with DeepView code, please see the :ref:`how-to pages <connect_your_model>`.
 
-Assuming a :func:`pipeline <dnikit.base.pipeline>`
+Assuming a :func:`pipeline <deepview.base.pipeline>`
 is set up that produces responses from a model,
 `Duplicates` analysis can be run as so:
 
 .. code-block:: python
 
-   from dnikit.introspectors import Duplicates
+   from deepview.introspectors import Duplicates
 
    response_producer = ...  # pipeline setup here
 
@@ -43,10 +43,10 @@ A full example pipeline for the CIFAR10 dataset and model
 
 .. code-block:: python
 
-   from dnikit.base import pipeline
-   from dnikit.processors import Cacher, ImageResizer
-   from dnikit.introspectors import Duplicates, DimensionReduction
-   from dnikit_tensorflow import TFDatasetExamples, TFModelExamples
+   from deepview.base import pipeline
+   from deepview.processors import Cacher, ImageResizer
+   from deepview.introspectors import Duplicates, DimensionReduction
+   from deepview_tensorflow import TFDatasetExamples, TFModelExamples
 
    # Load CIFAR10 dataset and feed into MobileNet,
    # observing responses from layer "conv_pw_13/convolution:0'"
@@ -82,17 +82,17 @@ that does not use Symphony in the :ref:`example notebook below <duplicates_examp
 Config Options
 --------------
 
-The :func:`introspect` method of :class:`Duplicates <dnikit.introspectors.Duplicates>`
+The :func:`introspect` method of :class:`Duplicates <deepview.introspectors.Duplicates>`
 takes an optional :code:`batch_size` keyword argument for the size of batches
 to pull from and an optional :code:`threshold` keyword argument of type
-:class:`dnikit.introspectors.Duplicates.DuplicatesThresholdStrategyType`. Please see the
-API docs for :class:`Duplicates <dnikit.introspectors.Duplicates>` for more information.
+:class:`deepview.introspectors.Duplicates.DuplicatesThresholdStrategyType`. Please see the
+API docs for :class:`Duplicates <deepview.introspectors.Duplicates>` for more information.
 
 Exploring Duplicates Results
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The return object of Duplicates is a :code:`dict` mapping response names to a list of
-:class:`DuplicateSetCandidates <dnikit.introspectors.Duplicates.DuplicateSetCandidate>`,
+:class:`DuplicateSetCandidates <deepview.introspectors.Duplicates.DuplicateSetCandidate>`,
 which represent clusters of nearby data samples. Assuming
 a return object :code:`duplicates`, the results may be traversed as so:
 
@@ -146,13 +146,13 @@ found the same results as an "exact" algorithm on CIFAR-10. The distances comput
 
 The run-time of `Duplicates` scales linearly with the number of samples and the
 number of dimensions in the response data. If the responses have a high number of dimensions,
-consider using :class:`DimensionReduction <dnikit.introspectors.DimensionReduction>` to reduce the
+consider using :class:`DimensionReduction <deepview.introspectors.DimensionReduction>` to reduce the
 dimensions (e.g. to 40).
 
 Relevant API
 ------------
 
-:class:`Duplicates <dnikit.introspectors.Duplicates>` -- introspector to find duplicates and near duplicates
+:class:`Duplicates <deepview.introspectors.Duplicates>` -- introspector to find duplicates and near duplicates
 
 
 .. _duplicates_example:

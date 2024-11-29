@@ -1,0 +1,14 @@
+{
+  "author_name": "",
+  "author_email": "",
+  "github_project_name": "canvas",
+  "github_organization_name": "betterwithdata",
+  "widget_name": "Confusion Matrix",
+  "widget_identifier": "Canvas{{ cookiecutter.widget_name | replace(' ', '') }}",
+  "python_package_name": "canvas_{{ cookiecutter.widget_name | lower | replace(' ', '_') | replace('-', '_') }}",
+  "npm_package_name": "canvas-{{ cookiecutter.widget_name | lower | replace(' ', '-') }}",
+  "npm_package_version": "1.0.0",
+  "project_short_description": "A custom Canvas widget",
+  "year": "{% now 'utc', '%Y' %}",
+  "_extensions": ["jinja2_time.TimeExtension"]
+}

@@ -94,7 +94,7 @@ def _compute_num_active_units(corr: np.ndarray,
         )
     if num_active_units < num_units_to_keep:
         raise DeepViewException(f'The request to keep {num_units_to_keep} cannot be satisfied '
-                              f'since there are only {num_active_units} active units')
+                                f'since there are only {num_active_units} active units')
     return num_active_units
 
 
@@ -158,7 +158,7 @@ def _select_units_l1_given_corr(corr: np.ndarray,
         extreme_val = direction_function(l1n)
         if np.isnan(extreme_val):
             raise DeepViewException(f'All the L1 values are NaN. This is the |correlation matrix| '
-                                  f'after {it} iterations: {corr}')
+                                    f'after {it} iterations: {corr}')
 
         # get highest/lowest l1 units
         extreme_cols = np.where(np.isclose(l1n, extreme_val))[0]

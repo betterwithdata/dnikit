@@ -20,7 +20,7 @@ import pyarrow as pa
 from ipywidgets import HBox, jsdlink, jslink
 from ipywidgets.widgets.widget_layout import Layout
 
-from ._jupyter_utils import (current_dir)
+from ._jupyter_utils import (get_current_dir)
 from ._helpers import (camel_dict_to_snake_case_dict, dataclass_to_camel_dict,
                        deserialize_table, get_data_type,
                        get_num_instances_by_data_type, serialize_table, table_to_file)
@@ -82,12 +82,12 @@ class Canvas:
             return
 
         self._jupyter_files_path = self._files_path
-        if notebook and self._files_path is not None:
+        if self._notebook and self._files_path is not None:
             self._jupyter_files_path = os.path.join(
                 '/files/', self._files_path)
         elif self._files_path is not None:
             self._jupyter_files_path = os.path.join(
-                current_dir(), self._files_path)
+                get_current_dir(), self._files_path)
 
         if files_path is not None:
             self._data_type = get_data_type(
@@ -95,14 +95,14 @@ class Canvas:
         else:
             self._data_type = CanvasDataType.TABULAR
 
-        print("Input files path is {}".format(str(self._jupyter_files_path)))
         self._canvas_spec = CanvasSpec(
             files_path=str(self._jupyter_files_path),
             data_type=self._data_type.value,
             id_column=id_column,
             instances_per_page=get_num_instances_by_data_type(
                 instances_per_page, self._data_type),
-            show_unfiltered_data=True
+            show_unfiltered_data=True,
+            notebook=self._notebook
         )
 
         # Dict of {'name': Widget} to cache widgets.

@@ -21,7 +21,7 @@
       "svelte",
       "node"
     ],
-    "importsNotUsedAsValues": "error",
+    "importsNotUsedAsValues": "remove",
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": ["./node_modules/@types"]

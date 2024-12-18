@@ -69,7 +69,6 @@ class ImageFolderDataset(TrainTestSplitProducer, _Logged):
             max_samples=max_samples
         )
 
-
     def _load_data_from_folder(self) -> Tuple[
         Tuple[np.ndarray, np.ndarray],
         Tuple[np.ndarray, np.ndarray]
@@ -171,7 +170,7 @@ class ImageFolderDataset(TrainTestSplitProducer, _Logged):
         self.logger.info(f"Total number of images: {len(X)}")
         self.logger.info(f"Image dimensions: {self.image_size}")
         self.logger.info(f"Train split ratio: {self.train_split}")
-        
+
         # Create train/test split
         n_train = int(len(X) * self.train_split)
         indices = np.random.permutation(len(X))
@@ -188,8 +187,6 @@ class ImageFolderDataset(TrainTestSplitProducer, _Logged):
             A TrainTestSplitProducer that can be used to iterate over the dataset
         """
         return TrainTestSplitProducer(self.split_dataset)
-
-
 
 
 @t.final

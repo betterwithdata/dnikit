@@ -87,7 +87,7 @@ def dataclass_to_camel_dict(spec):
         new_key = ''.join([word.title() for word in key.split('_')])
         new_key = new_key[0].lower() + new_key[1:]
         new_dict[new_key] = spec_dict[key]
-    print("Canvas spect dict value is {}".format(new_dict))
+    print("Canvas spec dict value is {}".format(new_dict))
     return new_dict
 
 

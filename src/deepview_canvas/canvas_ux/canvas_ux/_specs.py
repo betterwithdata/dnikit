@@ -65,3 +65,4 @@ class CanvasSpec():
     instances_per_page: int
     show_unfiltered_data: bool
     id_column: str = 'id'
+    notebook: bool = False

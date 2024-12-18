@@ -55,7 +55,7 @@ _DEFAULT_DIMENSIONS = 40
 def _check_pandas_is_installed() -> None:
     if not _pandas_available():
         raise DeepViewException("pandas not available, was deepview['dataset_report'] "
-                              "or deepview['dataset_report_base'] installed?")
+                                "or deepview['dataset_report_base'] installed?")
 
 
 @t.final

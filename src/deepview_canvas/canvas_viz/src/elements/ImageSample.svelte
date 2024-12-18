@@ -14,23 +14,40 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
 
   let imagePromise: Promise<string>;
 
-  $:imagePromise = loadImage($canvasSpec.filesPath, id);
+  $:imagePromise = loadImage($canvasSpec.filesPath, id, $canvasSpec.notebook);
 
   const contentsManager = ContentsService.getInstance();
 
-  async function loadImage(filesPath: string, imageId: string): Promise<string> {
-    try {
-      const filePath = join(filesPath, imageId);
-      const result = await contentsManager.readContent(filePath);
-      
-      if (typeof result !== 'string') {
-        throw new Error('Unexpected content type');
+  async function loadImage(filesPath: string, imageId: string, notebook: boolean): Promise<string> {
+
+    if (notebook) {
+      try {
+        const filePath = join(filesPath, imageId);
+        console.log("The notebook file path is " + filePath);
+        const result = await contentsManager.readContent(filePath);
+        
+        if (typeof result !== 'string') {
+          throw new Error('Unexpected content type');
+        }
+        return result
+      } catch (error) {
+        console.error('Error reading image file:', error);
+        throw new Error(`Failed to load image: ${imageId}`);
       }
-      
-      return result
-    } catch (error) {
-      console.error('Error reading image file:', error);
-      throw new Error(`Failed to load image: ${imageId}`);
+    } else {
+      try {
+        const filePath = join(filesPath, imageId);
+        console.log("The server file path is " + filePath);
+        const result = await contentsManager.readContent(filePath);
+        
+        if (typeof result !== 'string') {
+          throw new Error('Unexpected content type');
+        }
+        return result
+      } catch (error) {
+        console.error('Error reading image file:', error);
+        throw new Error(`Failed to load image: ${imageId}`);
+      }
     }
   }
 
@@ -51,7 +68,6 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
     alt={"Image with title: " + id}
     class={large ? "mx-1" : "w-12 m-1"}
     style="background: black; max-width: 250px"
-    on:click
     on:error={handleImageError}
   />
   {:catch error}

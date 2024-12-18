@@ -7,10 +7,14 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   import { writable } from "svelte/store";
   import "./utils.css";
   import { CanvasDataType } from "../src/types";
-  import AudioTest from "../static/canvas-audio-sample.mp3"
+  import audioFile from '../static/canvas-audio-sample.mp3?url';
 </script>
 
-<Meta title="AudioSample" component={AudioSample} argTypes={{}} />
+<Meta 
+  title="AudioSample" 
+  component={AudioSample} 
+  argTypes={{}}
+/>
 
 <Template let:args>
   <div>
@@ -21,14 +25,14 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
 <Story
   name="Default"
   args={{
-    id: AudioTest,
+    id: audioFile,
     canvasSpec: writable({
       idColumn: "id",
       filesPath: "",
       dataType: CanvasDataType.AUDIO,
       instancesPerPage: 15,
     }),
-    large: false,
+    large: true,
   }}
 />
 

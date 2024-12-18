@@ -1,6 +1,4 @@
 import { ContentsManager, Contents } from '@jupyterlab/services';
-import { PageConfig } from '@jupyterlab/coreutils';
-
 
 /**
  * Singleton contentsService class
@@ -48,7 +46,7 @@ export class ContentsService {
       if (typeof getFileResult.content !== 'string') {
         throw new Error('Unable to read the image');
       }
-      console.log(" The data format is " + `data:${getFileResult.mimetype};${getFileResult.format}}`)
+      // console.log(" The data format is " + `data:${getFileResult.mimetype};${getFileResult.format}}`)
       return `data:${getFileResult.mimetype};${getFileResult.format},${getFileResult.content}`;
     } catch (error) {
         console.error('Error reading file/directory:', error);

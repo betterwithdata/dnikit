@@ -68,6 +68,7 @@
     "@storybook/addon-svelte-csf": "^1.1.0",
     "@storybook/svelte": "^6.3.8",
     "@tsconfig/svelte": "^2.0.1",
+    "@types/wavesurfer.js": "^6.0.12",
     "add": "^2.0.6",
     "arquero": "^4.8.4",
     "autoprefixer": "^10.3.4",

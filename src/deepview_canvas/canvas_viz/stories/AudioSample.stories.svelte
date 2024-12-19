@@ -13,7 +13,13 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
 <Meta 
   title="AudioSample" 
   component={AudioSample} 
-  argTypes={{}}
+  argTypes={{
+    storybook: {
+      control: 'boolean',
+      description: 'Controls storybook mode',
+      defaultValue: true
+    }
+  }} 
 />
 
 <Template let:args>

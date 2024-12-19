@@ -18,6 +18,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   export let id: string;
   export let canvasSpec: Writable<CanvasSpec>;
   export let large: boolean = false;
+  export let storybook: boolean = false;
   
   const contentsManager = ContentsService.getInstance();
   
@@ -54,12 +55,16 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
     });
 
     const filePath = join($canvasSpec.filesPath, id);
-    contentsManager.readAudioContent(filePath).then(result => {
-      const arrayBuffer = base64ToArrayBuffer(result);
-      wavesurfer.loadArrayBuffer(arrayBuffer);
-    }).catch(error => {
-      console.error("Unable to load the audio data", error)
-    });
+    if (storybook) {
+      wavesurfer.load(filePath);
+    } else {
+      contentsManager.readAudioContent(filePath).then(result => {
+        const arrayBuffer = base64ToArrayBuffer(result);
+        wavesurfer.loadArrayBuffer(arrayBuffer);
+      }).catch(error => {
+        console.error("Unable to load the audio data", error)
+      });
+    }
 
     playing = false;
     oldId = id;
@@ -75,7 +80,11 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
     }
   }
 
-  onDestroy(() => wavesurfer.destroy());
+  onDestroy(() => {
+    if (wavesurfer) {
+      wavesurfer.destroy();
+    }
+  });
 </script>
 
 <div class="flex flex-col {large ? 'w-48 mx-1' : 'w-24 m-1'}">

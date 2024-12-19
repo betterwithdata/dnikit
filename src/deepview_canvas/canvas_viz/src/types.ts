@@ -24,7 +24,6 @@ export interface CanvasSpec {
   dataType: CanvasDataType;
   instancesPerPage: number;
   showUnfilteredData: boolean;
-  notebook: boolean;
 }
 
 export interface WidgetSpec {

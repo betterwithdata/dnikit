@@ -41,8 +41,7 @@ class Canvas:
                  id_column: str = "id",
                  files_path: str = None,
                  data_type: CanvasDataType = None,
-                 instances_per_page: int = None,
-                 notebook: bool = False):
+                 instances_per_page: int = None):
         """
         Parameters
         ----------
@@ -60,11 +59,8 @@ class Canvas:
         instances_per_page: str, optional
             How many instances each page in a widget should show.
             If :code:`None`, Canvas will select a sensible default given the selected data type.
-        notebook : bool, optional
-            If true, the data path is updated to use the Jupyter Notebook fileserver, by default :code:`False`.
         """
         self._application = None
-        self._notebook = notebook
         self._files_path = files_path
         self._table_link = None
 
@@ -82,14 +78,11 @@ class Canvas:
             return
 
         self._jupyter_files_path = self._files_path
-        if self._notebook and self._files_path is not None:
-            self._jupyter_files_path = os.path.join(
-                '/files/', self._files_path)
-        elif self._files_path is not None:
+        if self._files_path is not None:
             self._jupyter_files_path = os.path.join(
                 get_current_dir(), self._files_path)
 
-        if files_path is not None:
+        if self._files_path is not None:
             self._data_type = get_data_type(
                 data_type, table.slice(0, 1)[id_column].to_numpy()[0])
         else:
@@ -101,8 +94,7 @@ class Canvas:
             id_column=id_column,
             instances_per_page=get_num_instances_by_data_type(
                 instances_per_page, self._data_type),
-            show_unfiltered_data=True,
-            notebook=self._notebook
+            show_unfiltered_data=True
         )
 
         # Dict of {'name': Widget} to cache widgets.

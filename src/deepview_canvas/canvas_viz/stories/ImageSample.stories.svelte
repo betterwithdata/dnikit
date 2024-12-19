@@ -8,7 +8,16 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   import "./utils.css";
 </script>
 
-<Meta title="ImageSample" component={ImageSample} argTypes={{}} />
+<Meta title="ImageSample" 
+  component={ImageSample} 
+  argTypes={{
+    storybook: {
+      control: 'boolean',
+      description: 'Controls storybook mode',
+      defaultValue: true
+    }
+  }} 
+/>
 
 <Template let:args>
   <div>
@@ -25,6 +34,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
       filesPath: "https://picsum.photos/",
     }),
     large: false,
+    storybook: true
   }}
 />
 

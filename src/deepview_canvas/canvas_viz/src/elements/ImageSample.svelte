@@ -11,33 +11,21 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   export let id: string;
   export let canvasSpec: Writable<CanvasSpec>;
   export let large: boolean = true;
+  export let storybook: boolean = false;
 
   let imagePromise: Promise<string>;
 
-  $:imagePromise = loadImage($canvasSpec.filesPath, id, $canvasSpec.notebook);
+  $:imagePromise = loadImage($canvasSpec.filesPath, id);
 
   const contentsManager = ContentsService.getInstance();
 
-  async function loadImage(filesPath: string, imageId: string, notebook: boolean): Promise<string> {
+  async function loadImage(filesPath: string, imageId: string): Promise<string> {
 
-    if (notebook) {
-      try {
-        const filePath = join(filesPath, imageId);
-        console.log("The notebook file path is " + filePath);
-        const result = await contentsManager.readContent(filePath);
-        
-        if (typeof result !== 'string') {
-          throw new Error('Unexpected content type');
-        }
-        return result
-      } catch (error) {
-        console.error('Error reading image file:', error);
-        throw new Error(`Failed to load image: ${imageId}`);
-      }
+    if (storybook) {
+      return join(filesPath, imageId);
     } else {
       try {
         const filePath = join(filesPath, imageId);
-        console.log("The server file path is " + filePath);
         const result = await contentsManager.readContent(filePath);
         
         if (typeof result !== 'string') {

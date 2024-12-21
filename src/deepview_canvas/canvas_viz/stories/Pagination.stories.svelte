@@ -51,6 +51,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
     selected={args.selected}
     canvasSpec={args.specs[args.type]}
     tooltip={args.tooltips[args.type]}
+    storybook={true}
   >
     <div slot="extra">Extra content can be placed here.</div>
   </Pagination>

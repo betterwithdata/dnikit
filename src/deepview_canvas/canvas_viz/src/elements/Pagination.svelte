@@ -19,6 +19,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   export let selected: Writable<string[]>;
   export let canvasSpec: Writable<CanvasSpec>;
   export let tooltip: Writable<TooltipSpec>;
+  export let storybook: boolean = false;
 
   let page = 0;
   function resetPage() {
@@ -65,7 +66,12 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   >
     <div class="flex flex-wrap content-top">
       {#each dataPoints as dataPoint}
-        <DataSample {dataPoint} {canvasSpec} {selected} {tooltip} />
+        <DataSample
+        {dataPoint}
+        {canvasSpec}
+        {selected}
+        {tooltip}
+        {storybook} />
       {/each}
     </div>
     <slot name="extra" />

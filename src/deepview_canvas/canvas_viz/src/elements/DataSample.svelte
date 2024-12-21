@@ -14,6 +14,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   export let selected: Writable<string[]>;
   export let tooltip: Writable<TooltipSpec>;
   export let number: number | undefined = undefined;
+  export let storybook: boolean = false;
 
   $: id = dataPoint[$canvasSpec.idColumn] as string;
 
@@ -65,6 +66,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
     this={getComponentForType($canvasSpec.dataType)}
     {id}
     {canvasSpec}
+    {storybook}
     on:click={() => select()}
   />
   {#if $selected.includes(id)}

@@ -13,6 +13,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
 
   export let canvasSpec: Writable<CanvasSpec>;
   export let tooltip: Writable<TooltipSpec>;
+  export let storybook: boolean = false;
 
   let windowWidth = 0;
   let windowHeight = 0;
@@ -43,6 +44,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
         this={getComponentForType($canvasSpec.dataType)}
         id={$tooltip.instance[$canvasSpec.idColumn]}
         {canvasSpec}
+        {storybook}
         large={true}
       />
     </div>

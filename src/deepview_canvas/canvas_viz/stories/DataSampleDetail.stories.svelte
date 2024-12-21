@@ -24,6 +24,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   <DataSampleDetail
     canvasSpec={args.specs[args.type]}
     tooltip={args.tooltips[args.type]}
+    storybook={true}
   />
 </Template>
 

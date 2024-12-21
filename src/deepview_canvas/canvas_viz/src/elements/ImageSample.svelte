@@ -20,8 +20,9 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   const contentsManager = ContentsService.getInstance();
 
   async function loadImage(filesPath: string, imageId: string): Promise<string> {
-
+    console.log("Loading image:", imageId);
     if (storybook) {
+      console.log("Loading image from storybook:", imageId);
       return join(filesPath, imageId);
     } else {
       try {
@@ -31,7 +32,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
         if (typeof result !== 'string') {
           throw new Error('Unexpected content type');
         }
-        return result
+        return result;
       } catch (error) {
         console.error('Error reading image file:', error);
         throw new Error(`Failed to load image: ${imageId}`);

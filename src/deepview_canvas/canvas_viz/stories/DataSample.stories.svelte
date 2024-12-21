@@ -27,6 +27,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
       tooltip={args.tooltips[args.type]}
       selected={args.selected}
       dataPoint={args.dataPoints[args.type]}
+      storybook={true}
     />
   </div>
 </Template>

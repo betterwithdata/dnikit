@@ -1,14 +1,18 @@
 import { ContentsManager, Contents } from '@jupyterlab/services';
 
 /**
- * Singleton contentsService class
+ * Singleton contentsService class for managing file operations
  */
 export class ContentsService {
   contentsManager: ContentsManager;
   private static instance: ContentsService;
+  private baseServerPath: string;
+
   private constructor() {
     const contentsManager = new ContentsManager();
     this.contentsManager = contentsManager;
+    // Get the server root from the contents manager settings
+    this.baseServerPath = contentsManager.serverSettings?.baseUrl || process.env.JUPYTER_SERVER_ROOT || '';
   }
 
   static getInstance(): ContentsService {
@@ -43,17 +47,17 @@ export class ContentsService {
   ): Promise<string> {
     try {
       const getFileResult = await this.contentsManager.get(path);
+      console.log("The local path is:", this.getLocalPath(path));
+      console.log("The server path is:", this.getServerPath(path));
       if (typeof getFileResult.content !== 'string') {
         throw new Error('Unable to read the image');
       }
-      // console.log(" The data format is " + `data:${getFileResult.mimetype};${getFileResult.format}}`)
       return `data:${getFileResult.mimetype};${getFileResult.format},${getFileResult.content}`;
     } catch (error) {
         console.error('Error reading file/directory:', error);
         throw error; // Re-throw the error instead of returning it
     }
   }
-
 
   async readAudioContent(
     path: string
@@ -70,4 +74,64 @@ export class ContentsService {
     }
   }
 
+  /**
+   * Convert a server path to a local filesystem path
+   * @param path - Server path (e.g., '/notebooks/example.ipynb')
+   * @returns Local filesystem path (e.g., '/home/user/notebooks/example.ipynb')
+   * 
+   * Usage:
+   * ```typescript
+   * const serverPath = '/notebooks/example.ipynb';
+   * const localPath = contentsService.getLocalPath(serverPath);
+   * console.log(localPath); // '/home/user/notebooks/example.ipynb'
+   * ```
+   */
+  getLocalPath(path: string): string {
+    const relativePath = this.contentsManager.localPath(path);
+    if (!this.baseServerPath) {
+      console.warn('Base server path not available, returning relative path');
+      return relativePath;
+    }
+    return `${this.baseServerPath}/${relativePath}`.replace(/\/+/g, '/'); // Clean up any double slashes
+  }
+
+  /**
+   * Convert a local filesystem path to a server path
+   * @param localPath - Local filesystem path (e.g., '/home/user/notebooks/example.ipynb')
+   * @returns Server path (e.g., '/notebooks/example.ipynb')
+   * 
+   * Usage:
+   * ```typescript
+   * const localPath = '/home/user/notebooks/example.ipynb';
+   * const serverPath = contentsService.getServerPath(localPath);
+   * console.log(serverPath); // '/notebooks/example.ipynb'
+   * ```
+   */
+  getServerPath(localPath: string): string {
+    return this.contentsManager.normalize(localPath);
+  }
+
+  /**
+   * Resolve a relative path against a parent directory
+   * @param relativePath - Relative path to resolve (e.g., '../data/file.csv')
+   * @param parent - Parent directory to resolve against (e.g., '/notebooks/project')
+   * @returns Resolved absolute server path
+   * 
+   * Usage:
+   * ```typescript
+   * // When in /notebooks/project/analysis
+   * const relativePath = '../data/file.csv';
+   * const parent = '/notebooks/project/analysis';
+   * const resolved = contentsService.resolvePath(relativePath, parent);
+   * console.log(resolved); // '/notebooks/project/data/file.csv'
+   * 
+   * // Handle special cases
+   * contentsService.resolvePath('.', '/home');        // Returns '/home'
+   * contentsService.resolvePath('..', '/home/user');  // Returns '/home'
+   * contentsService.resolvePath('file.txt', '/dir');  // Returns '/dir/file.txt'
+   * ```
+   */
+  resolvePath(relativePath: string, parent: string): string {
+    return this.contentsManager.resolvePath(relativePath, parent);
+  }
 }

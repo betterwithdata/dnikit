@@ -14,10 +14,16 @@
 # limitations under the License.
 #
 
+import os
 import dataclasses
 
 import numpy as np
+try:
+    import cv2  # This is an optional deepview dependency
+except ImportError:
+    pass
 
+from pathlib import Path
 from ._batch._batch import Batch
 from ._producer import Producer
 from deepview.exceptions import DeepViewException
@@ -68,9 +74,13 @@ class TrainTestSplitProducer(Producer):
     max_samples: int = -1
     """Max data samples to pull from. Set to -1 to pull all samples."""
 
+    write_to_folder: t.Optional[str] = None
+    """Path to write the data to. If None, does not write anything."""
+
     _samples: np.ndarray = dataclasses.field(init=False)
     _labels: np.ndarray = dataclasses.field(init=False)
     _dataset_ids: np.ndarray = dataclasses.field(init=False)
+    _dataset_labels: np.ndarray = dataclasses.field(init=False)
     _permutation: t.Optional[np.ndarray] = dataclasses.field(init=False)
 
     def __post_init__(self) -> None:
@@ -85,7 +95,6 @@ class TrainTestSplitProducer(Producer):
                             f"received {str(self.split_dataset)}.")
 
         (x_train, y_train), (x_test, y_test) = self.split_dataset
-
         # Checks for empty data and initializes appropriately
         # This is necessary because np.concatenate complains when given an empty ndarray.
         # NOTE: Because of the error checking in the .subset method,
@@ -104,15 +113,20 @@ class TrainTestSplitProducer(Producer):
             self._samples = np.squeeze(x_train)
             self._labels = np.squeeze(y_train)
             self._dataset_ids = np.full(len(x_train), 0)
+            self._dataset_labels = np.full(len(x_train), "train")
         elif x_train.size == 0:
             self._samples = np.squeeze(x_test)
             self._labels = np.squeeze(y_test)
             self._dataset_ids = np.full(len(x_test), 1)
+            self._dataset_labels = np.full(len(x_test), "test")
         else:
             self._samples = np.squeeze(np.concatenate((x_train, x_test)))
             self._labels = np.squeeze(np.concatenate((y_train, y_test)))
             self._dataset_ids = np.concatenate((np.full(len(x_train), 0),
                                                 np.full(len(x_test), 1)))
+            self._dataset_labels = np.concatenate((np.full(len(x_train), "train"),
+                                                   np.full(len(x_test), "test")))
+
         if self.max_samples < 0 or self.max_samples > len(self._samples):
             # If max_samples is less than 0 or greater than the dataset, sample the whole dataset
             self.max_samples = len(self._samples)
@@ -181,6 +195,21 @@ class TrainTestSplitProducer(Producer):
             max_samples=(self.max_samples if max_samples is None else max_samples)
         )
 
+    def _class_path(self, index: int) -> str:
+        return f"{self._dataset_labels[index]}/{self._labels[index]}"
+
+    def _write_images_to_disk(self, indices: t.Sequence[int], data_path: str) -> t.List[str]:
+        file_paths = []
+        for idx in indices:
+            base_path = os.path.join(data_path, self._class_path(idx))
+            Path(base_path).mkdir(exist_ok=True, parents=True)
+            filename = os.path.join(base_path, f"image{idx}.png")
+            # Write to disk after converting to BGR format, used by opencv
+            cv2.imwrite(filename, cv2.cvtColor(self._samples[idx, ...], cv2.COLOR_RGB2BGR))
+            file_paths.append(os.path.join(self._class_path(idx), f"image{idx}.png"))
+
+        return file_paths
+
     def __call__(self, batch_size: int) -> t.Iterable[Batch]:
         """
         Produce generic :class:`Batch` es from the loaded data,
@@ -193,7 +222,7 @@ class TrainTestSplitProducer(Producer):
             yields :class:`Batches <deepview.base.Batch>` of the split_dataset of size ``batch_size``.
             If ``self.attach_metadata`` is True, attaches metadata in format:
 
-            - :class:`Batch.StdKeys.IDENTIFIER`: A NumPy array of ints representing unique indices
+            - :class:`Batch.StdKeys.IDENTIFIER`: Use pathname as the identifier for each data sample, excluding base data directory
             - :class:`Batch.StdKeys.LABELS`: A dict with:
                 - "label": a NumPy array of label features (format specific to each dataset)
                 - "dataset": a NumPy array of ints either 0 (for "train") or 1 (for "test")
@@ -213,12 +242,16 @@ class TrainTestSplitProducer(Producer):
             )
 
             if self.attach_metadata:
-                # Use pathname as the identifier for each data sample, excluding base data directory
-                builder.metadata[Batch.StdKeys.IDENTIFIER] = indices
+                if self.write_to_folder is not None:
+                    # Use pathname as the identifier for each data sample, excluding base data directory
+                    builder.metadata[Batch.StdKeys.IDENTIFIER] = self._write_images_to_disk(indices, self.write_to_folder)
+                else:
+                    builder.metadata[Batch.StdKeys.IDENTIFIER] = indices
+
                 # Add class and dataset labels
                 builder.metadata[Batch.StdKeys.LABELS] = {
                     "label": np.take(self._labels, indices),
-                    "dataset": np.take(self._dataset_ids, indices)
+                    "dataset": np.take(self._dataset_labels, indices)
                 }
 
             yield builder.make_batch()

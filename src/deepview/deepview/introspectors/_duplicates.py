@@ -16,6 +16,8 @@
 
 import numpy as np
 from dataclasses import dataclass
+import logging
+from tqdm import tqdm
 
 import annoy
 from sklearn.decomposition import PCA as SKLearnPCA
@@ -153,6 +155,8 @@ class Duplicates(Introspector):
             :func:`Duplicates.introspect <introspect>`
     """
 
+    _static_logger = logging.getLogger(f"{__name__}.{__qualname__}")
+
     @t.final
     class ThresholdStrategy:
         Percentile: t.Final = Percentile
@@ -282,15 +286,29 @@ class Duplicates(Introspector):
         assert len(responses.shape) == 2, "Requires 1d vector per element"
         count = len(responses)
 
+        Duplicates._static_logger.info("Building duplicate clusters with %d samples", count)
+
         # build the index
         index = annoy.AnnoyIndex(responses.shape[1], "euclidean")
         index.set_seed(0)
-        for i, v in enumerate(responses):
+        Duplicates._static_logger.debug("Creating Annoy index with dimension %d ", responses.shape[1])
+
+        # Add items to index with progress bar if in debug mode
+        if Duplicates._static_logger.isEnabledFor(logging.DEBUG):
+            iterator = tqdm(enumerate(responses), total=len(responses),
+                            desc="Building Annoy index", unit="vectors")
+        else:
+            iterator = enumerate(responses)
+
+        for i, v in iterator:
             index.add_item(i, v)
+
+        Duplicates._static_logger.debug("Completed adding items to Annoy index %d ", index.get_n_items())
 
         # the 30 is the number of trees to build -- the higher the number,
         # the better the precision when querying (at the cost of time and memory).
         index.build(30)
+        Duplicates._static_logger.debug("Built Annoy index with 30 trees")
 
         # n-closest distance matrix.  n can be anything > 2.  larger values will
         # produce larger initial clusters and a value of 10 gives similar distance
@@ -299,6 +317,7 @@ class Duplicates(Introspector):
         n = 10
         distances = np.zeros((count, n))
         indexes = np.zeros((count, n), "i")
+        Duplicates._static_logger.debug("Finding %d nearest neighbors for each sample", n)
 
         # build the n-closest distance matrix
         for i in range(count):
@@ -308,6 +327,7 @@ class Duplicates(Introspector):
         all_values = np.trim_zeros(np.sort(distances.reshape((count * n, ))))
         distance = threshold(all_values)
         del all_values
+        Duplicates._static_logger.debug("Computed distance threshold: %f", distance)
 
         # build the clusters of length up to n
         clusters = []
@@ -315,6 +335,7 @@ class Duplicates(Introspector):
             if count > 1:
                 clusters.append(indexes[i][distances[i] <= distance])
 
+        Duplicates._static_logger.info("Found %d duplicate clusters", len(clusters))
         return Duplicates._combine_clusters(clusters)
 
     @staticmethod

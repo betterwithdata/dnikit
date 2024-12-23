@@ -98,7 +98,7 @@ def test_load_example_dataset() -> None:
         assert all((label in (2, 4, 6)) for label in batch.metadata[Batch.StdKeys.LABELS]["label"])
 
         # Check that all data is from test set
-        assert all(d == 1 for d in batch.metadata[Batch.StdKeys.LABELS]["dataset"])
+        assert all(d == "test" for d in batch.metadata[Batch.StdKeys.LABELS]["dataset"])
         num_runs += 1
 
     # Assert that subset terminates w/ num of items equal to "max_samples" (set to 300 earlier)

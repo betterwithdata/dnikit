@@ -138,3 +138,7 @@ coverage_*
 
 #vs code dir
 .vscode/
+
+# Canvas
+
+*.js.map

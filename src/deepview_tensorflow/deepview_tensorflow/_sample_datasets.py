@@ -30,14 +30,16 @@ class _KerasDatasetLoader(TrainTestSplitProducer):
     def __init__(self,
                  split_dataset: t.Optional[dt.TrainTestSplitType] = None,
                  attach_metadata: bool = True,
-                 max_samples: int = -1) -> None:
+                 max_samples: int = -1,
+                 write_to_folder: t.Optional[str] = None) -> None:
         # Load the dataset:
         if split_dataset is None:
             split_dataset = self.load_dataset()
         super().__init__(
             split_dataset=split_dataset,
             attach_metadata=attach_metadata,
-            max_samples=max_samples
+            max_samples=max_samples,
+            write_to_folder=write_to_folder
         )
 
     @staticmethod

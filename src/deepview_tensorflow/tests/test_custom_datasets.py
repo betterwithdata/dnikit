@@ -20,8 +20,11 @@ import unittest
 from typing import List, Tuple
 import numpy as np
 from PIL import Image
+from pathlib import Path
 
+from deepview.base import Batch
 from deepview_tensorflow import TFCustomDatasets
+from deepview._logging import _Logged
 
 
 class TestImageFolderDataset(unittest.TestCase):
@@ -31,6 +34,8 @@ class TestImageFolderDataset(unittest.TestCase):
     image_size: Tuple[int, int]
     num_images: int
     num_png_images: int
+    test_images: List[str]
+    created_dirs: List[str]
 
     def setUp(self) -> None:
         self.test_dir = tempfile.mkdtemp()
@@ -39,6 +44,8 @@ class TestImageFolderDataset(unittest.TestCase):
         self.image_size = (128, 128)
         self.num_images = len(self.classes) * self.images_per_class
         self.num_png_images = len(self.classes) * (self.images_per_class // 2)
+        self.test_images = [f'image_{i}.jpg' if i % 2 == 0 else f'image_{i}.png' for i in range(self.images_per_class)]
+        self.created_dirs = [self.test_dir]  # Track created directories
         for class_name in self.classes:
             class_dir = os.path.join(self.test_dir, class_name)
             os.makedirs(class_dir)
@@ -56,7 +63,13 @@ class TestImageFolderDataset(unittest.TestCase):
                 img.save(img_path, format=format_str)
 
     def tearDown(self) -> None:
-        shutil.rmtree(self.test_dir)
+        # Clean up all created directories
+        for dir_path in self.created_dirs:
+            if os.path.exists(dir_path):
+                try:
+                    shutil.rmtree(dir_path)
+                except Exception as e:
+                    print(f"Warning: Failed to remove directory {dir_path}: {e}")
 
     def test_initialization(self) -> None:
         dataset = TFCustomDatasets.ImageFolderDataset(
@@ -235,6 +248,175 @@ class TestImageFolderDataset(unittest.TestCase):
             self.fail(f"Array modification failed: {e}")
         self.assertEqual(x_train[0][0, 0, 0], 128)
         self.assertEqual(x_test[0][0, 0, 0], 128)
+
+    def test_get_producer(self) -> None:
+        """Test that get_producer returns a correctly configured TrainTestSplitProducer."""
+        max_samples = 6
+        dataset = TFCustomDatasets.ImageFolderDataset(
+            root_folder=self.test_dir,
+            image_size=self.image_size,
+            max_samples=max_samples
+        )
+
+        write_folder = dataset.write_to_folder
+        if write_folder is None:
+            raise ValueError("write_to_folder should not be None")
+
+        # Add the write_to_folder to tracked directories for cleanup
+        self.created_dirs.append(write_folder)
+
+        # Test producer configuration
+        self.assertEqual(dataset.max_samples, max_samples)
+        self.assertTrue(dataset.attach_metadata)
+        self.assertIsNotNone(write_folder)
+        self.assertTrue(write_folder.startswith('processed_'))
+
+        # Verify folder name format
+        expected_folder = 'processed_' + os.path.basename(self.test_dir)
+        self.assertEqual(write_folder, expected_folder)
+
+        # Test producer output
+        batch_iter = dataset(batch_size=3)
+        batch = next(iter(batch_iter))
+
+        # Verify metadata is attached
+        self.assertTrue(Batch.StdKeys.LABELS in batch.metadata)
+        self.assertTrue(Batch.StdKeys.IDENTIFIER in batch.metadata)
+
+        # Verify data shape and content
+        self.assertEqual(batch.batch_size, 3)
+        self.assertEqual(len(batch.metadata[Batch.StdKeys.LABELS]["label"]), 3)
+        self.assertEqual(len(batch.metadata[Batch.StdKeys.LABELS]["dataset"]), 3)
+
+        # Verify images are written to disk
+        self.assertTrue(os.path.exists(write_folder))
+        written_images = list(Path(write_folder).rglob('*.png'))
+        self.assertEqual(len(written_images), 3)  # Should have written 3 images for the batch
+
+    def test_metadata(self) -> None:
+        """Test that metadata is set correctly after initialization."""
+        dataset = TFCustomDatasets.ImageFolderDataset(
+            root_folder=self.test_dir,
+            image_size=self.image_size
+        )
+
+        # Verify file_names attribute is set
+        self.assertIsNotNone(dataset.file_names)
+        self.assertEqual(len(dataset.file_names), self.num_images)
+
+        # Verify split_dataset is set
+        self.assertIsNotNone(dataset.split_dataset)
+        (x_train, y_train), (x_test, y_test) = dataset.split_dataset
+        self.assertEqual(len(x_train) + len(x_test), self.num_images)
+
+    def test_load_data_with_invalid_extension(self) -> None:
+        """Test loading data with invalid file extension."""
+        # Create a file with invalid extension
+        invalid_file = os.path.join(self.test_dir, "class1", "invalid.txt")
+        with open(invalid_file, "w") as f:
+            f.write("invalid data")
+
+        dataset = TFCustomDatasets.ImageFolderDataset(
+            root_folder=self.test_dir,
+            image_size=self.image_size
+        )
+
+        # Verify the invalid file is skipped
+        self.assertEqual(len(dataset.split_dataset[0][0]) + len(dataset.split_dataset[1][0]), 12)  # Only valid images should be loaded
+
+    def test_load_data_with_empty_class(self) -> None:
+        """Test loading data with an empty class directory."""
+        # Create an empty class directory
+        empty_class_dir = os.path.join(self.test_dir, "empty_class")
+        os.makedirs(empty_class_dir)
+
+        dataset = TFCustomDatasets.ImageFolderDataset(
+            root_folder=self.test_dir,
+            image_size=self.image_size
+        )
+
+        # Verify the empty class is handled correctly
+        unique_labels = np.unique(np.concatenate([dataset.split_dataset[0][1], dataset.split_dataset[1][1]]))
+        self.assertNotIn("empty_class", unique_labels)
+
+    def test_load_data_with_corrupted_image(self) -> None:
+        """Test loading data with a corrupted image file."""
+        # Create a corrupted image file
+        corrupted_file = os.path.join(self.test_dir, "class1", "corrupted.png")
+        with open(corrupted_file, "wb") as f:
+            f.write(b"corrupted data")
+
+        dataset = TFCustomDatasets.ImageFolderDataset(
+            root_folder=self.test_dir,
+            image_size=self.image_size
+        )
+
+        # Verify the corrupted file is handled gracefully
+        self.assertEqual(len(dataset.split_dataset[0][0]) + len(dataset.split_dataset[1][0]), 12)  # Only valid images should be loaded
+
+    def test_train_split_with_invalid_ratio(self) -> None:
+        """Test train split with invalid ratio."""
+        # Test with train_split > 1
+        with self.assertRaises(ValueError):
+            TFCustomDatasets.ImageFolderDataset(
+                root_folder=self.test_dir,
+                image_size=self.image_size,
+                train_split=1.5
+            )
+
+        # Test with train_split < 0
+        with self.assertRaises(ValueError):
+            TFCustomDatasets.ImageFolderDataset(
+                root_folder=self.test_dir,
+                image_size=self.image_size,
+                train_split=-0.1
+            )
+
+    def test_no_valid_class_folders(self) -> None:
+        """Test handling of a root directory with no valid class folders."""
+        # Create a temporary directory with no subdirectories
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with self.assertRaises(ValueError) as cm:
+                TFCustomDatasets.ImageFolderDataset(
+                    root_folder=temp_dir,
+                    image_size=self.image_size
+                )
+            self.assertEqual(str(cm.exception), "No valid class folders found in the root directory")
+
+    def test_no_valid_images(self) -> None:
+        """Test handling of class folders with no valid images."""
+        # Create a temporary directory with empty class folders
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.makedirs(os.path.join(temp_dir, "class1"))
+            os.makedirs(os.path.join(temp_dir, "class2"))
+
+            with self.assertRaises(ValueError) as cm:
+                TFCustomDatasets.ImageFolderDataset(
+                    root_folder=temp_dir,
+                    image_size=self.image_size
+                )
+            self.assertEqual(str(cm.exception), "No valid image files found")
+
+    def test_logging_functionality(self) -> None:
+        """Test that logging functionality works correctly."""
+        dataset = TFCustomDatasets.ImageFolderDataset(
+            root_folder=self.test_dir,
+            image_size=self.image_size
+        )
+
+        # Verify dataset inherits from _Logged
+        self.assertTrue(isinstance(dataset, _Logged))
+
+        # Verify logger is initialized
+        self.assertIsNotNone(dataset.logger)
+
+        # Test logging with invalid directory to trigger error logs
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with self.assertRaises(ValueError):
+                TFCustomDatasets.ImageFolderDataset(
+                    root_folder=temp_dir,
+                    image_size=self.image_size
+                )
 
 
 if __name__ == '__main__':

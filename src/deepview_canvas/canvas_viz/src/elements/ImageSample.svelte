@@ -10,7 +10,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
 
   export let id: string;
   export let canvasSpec: Writable<CanvasSpec>;
-  export let large: boolean = true;
+  export let large: boolean = false;
   export let storybook: boolean = false;
 
   let imagePromise: Promise<string>;
@@ -20,9 +20,9 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   const contentsManager = ContentsService.getInstance();
 
   async function loadImage(filesPath: string, imageId: string): Promise<string> {
-    console.log("Loading image:", imageId);
+    // console.log("Loading image:", imageId);
     if (storybook) {
-      console.log("Loading image from storybook:", imageId);
+      // console.log("Loading image from storybook:", imageId);
       return join(filesPath, imageId);
     } else {
       try {
@@ -43,7 +43,6 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   function handleImageError(event: Event) {
     console.error("Error loading image:", event);
     const target = event.target as HTMLImageElement;
-    //target.src = 'path/to/fallback/image.jpg';
     target.alt = 'Image failed to load';
   }
 </script>
@@ -56,7 +55,7 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
     {src}
     alt={"Image with title: " + id}
     class={large ? "mx-1" : "w-12 m-1"}
-    style="background: black; max-width: 250px"
+    style={`background: black; max-width: ${large ? '256px' : '128px'}`}
     on:error={handleImageError}
   />
   {:catch error}

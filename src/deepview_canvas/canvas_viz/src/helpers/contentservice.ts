@@ -47,8 +47,6 @@ export class ContentsService {
   ): Promise<string> {
     try {
       const getFileResult = await this.contentsManager.get(path);
-      console.log("The local path is:", this.getLocalPath(path));
-      console.log("The server path is:", this.getServerPath(path));
       if (typeof getFileResult.content !== 'string') {
         throw new Error('Unable to read the image');
       }

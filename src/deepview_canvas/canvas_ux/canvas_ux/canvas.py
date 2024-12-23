@@ -308,7 +308,6 @@ class Canvas:
         CanvasSpec
             The spec for the current Canvas report.
         """
-        print("Get Canvas spec called")
         return CanvasSpec(**camel_dict_to_snake_case_dict(
             self._toolbar_widget.canvas_spec))
 

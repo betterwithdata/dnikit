@@ -42,14 +42,56 @@ Copyright (C) 2023 betterwithdata Inc. All Rights Reserved. -->
   let target = [0, 0];
   let distance = 1;
   let colorScale = [
-    '#308BEF',
-    '#4DC960',
-    '#FF9500',
-    '#EF5C53',
-    '#A34FCD',
-    '#00A39B',
-    '#98685E',
-    '#EEDB41',
+    '#308BEF', // Blue
+    '#4DC960', // Green
+    '#FF9500', // Orange
+    '#EF5C53', // Red
+    '#A34FCD', // Purple
+    '#00A39B', // Teal
+    '#98685E', // Brown
+    '#EEDB41', // Yellow
+    '#5B9BD5', // Light Blue
+    '#ED7D31', // Dark Orange
+    '#70AD47', // Dark Green
+    '#FF4444', // Bright Red
+    '#9B59B6', // Light Purple
+    '#3498DB', // Sky Blue
+    '#F1C40F', // Golden Yellow
+    '#E67E22', // Burnt Orange
+    '#16A085', // Sea Green
+    '#8E44AD', // Deep Purple
+    '#2ECC71', // Emerald Green
+    '#E74C3C', // Crimson
+    '#1ABC9C', // Turquoise
+    '#D35400', // Pumpkin
+    '#27AE60', // Nephritis
+    '#2980B9', // Belize Hole
+    '#F39C12', // Orange
+    '#C0392B', // Pomegranate
+    '#884EA0', // Wisteria
+    '#7D3C98', // Purple
+    '#2471A3', // Steel Blue
+    '#17A589', // Persian Green
+    '#138D75', // Pine Green
+    '#D4AC0D', // Sunflower
+    '#CA6F1E', // Dark Orange
+    '#BA4A00', // Dark Red
+    '#7E5109', // Brown
+    '#196F3D', // Forest Green
+    '#1B4F72', // Navy Blue
+    '#4A235A', // Deep Purple
+    '#0E6251', // Dark Teal
+    '#784212', // Saddle Brown
+    '#7B7D7D', // Gray
+    '#4D5656', // Dark Gray
+    '#273746', // Dark Blue Gray
+    '#17202A', // Very Dark Blue
+    '#7DCEA0', // Light Green
+    '#85C1E9', // Light Blue
+    '#F7DC6F', // Light Yellow
+    '#F1948A', // Light Red
+    '#BB8FCE', // Light Purple
+    '#85929E'  // Light Gray
   ];
 
   $: categories = (

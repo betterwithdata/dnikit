@@ -2,6 +2,8 @@
 
 DeepView is a powerful Python toolkit designed for comprehensive introspection and analysis of machine learning models and datasets. It provides a rich set of tools for understanding, visualizing, and debugging deep learning models and their training data.
 
+> **Note**: This project is a fork of [Apple's DNIKit](https://github.com/apple/dnikit) (Data and Network Introspection Kit) under the Apache 2.0 License. While maintaining the core functionality, we've made significant modifications and improvements to better suit our specific needs.
+
 ## 🌟 Key Features
 
 ### Model Analysis
@@ -126,7 +128,14 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 - Submitting pull requests
 
 ## 📄 License
-This project is licensed under the [LICENSE](LICENSE) file in the root directory.
+This project is licensed under the Apache License, Version 2.0. It is derived from [Apple's DNIKit](https://github.com/apple/dnikit), with significant modifications.
+
+The full license text can be found in the [LICENSE](LICENSE) file in the root directory.
+
+### Attribution
+- Original Project: [DNIKit](https://github.com/apple/dnikit) by Apple Inc.
+- Original License: Apache License, Version 2.0
+- Copyright Notice: Portions of this software were originally developed by Apple Inc.
 
 ## 🔗 Related Resources
 - [Complete Documentation](https://betterwithdata.github.io/deepview/index.html)
